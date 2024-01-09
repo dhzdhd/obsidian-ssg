@@ -1,19 +1,21 @@
 ---
 import type { GetStaticPaths } from "astro";
 import "@/styles/globals.css";
+import { Button } from "@components/ui/button";
+import Layout from "../layouts/Layout.astro";
 
 export const getStaticPaths: GetStaticPaths = (async () => {
   const posts = await Astro.glob("../posts/**/*.md");
 
   return posts.map((post) => {
-    const rel_path = post.file.split("src/posts/")[1].split(".md")[0];
-    // const sanitized = rel_path.replaceAll(" ", "%20");
+    const rel_path = post.file.split("src/posts/")[1];
+    const sanitized = rel_path.split(".md")[0];
 
     console.log(rel_path);
 
     return {
       params: {
-        slug: rel_path,
+        slug: sanitized,
       },
       props: {
         post,
@@ -25,6 +27,33 @@ export const getStaticPaths: GetStaticPaths = (async () => {
 const { Content } = Astro.props.post;
 ---
 
-<article>
-  <Content />
-</article>
+<script is:inline>
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+  const isDark = getThemePreference() === "dark";
+  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+</script>
+
+<Layout>
+  <Button variant="outline">Hello</Button>
+  <article>
+    <Content />
+  </article>
+</Layout>

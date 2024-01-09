@@ -1,4 +1,8 @@
 ---
+import "@/styles/globals.css";
+import { ModeToggle } from "@/components/ModeToggle";
+import Drawer from "@components/Drawer";
+
 interface Props {
   title: string;
 }
@@ -6,7 +10,6 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,25 +20,8 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
+    <ModeToggle client:load />
+    <Drawer client:load />
     <slot />
   </body>
 </html>
-
-<style is:global>
-  html {
-    font-family: system-ui, sans-serif;
-    background: #13151a;
-  }
-
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
-  }
-</style>
