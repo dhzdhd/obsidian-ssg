@@ -1,18 +1,19 @@
 ---
 import type { GetStaticPaths } from "astro";
+import "@/styles/globals.css";
 
 export const getStaticPaths: GetStaticPaths = (async () => {
   const posts = await Astro.glob("../posts/**/*.md");
 
   return posts.map((post) => {
-    const rel_path = post.file.split("src/posts/")[1];
-    const sanitized = rel_path.replaceAll(" ", "%20");
+    const rel_path = post.file.split("src/posts/")[1].split(".md")[0];
+    // const sanitized = rel_path.replaceAll(" ", "%20");
 
-    console.log(sanitized);
+    console.log(rel_path);
 
     return {
       params: {
-        slug: sanitized,
+        slug: rel_path,
       },
       props: {
         post,
