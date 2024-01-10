@@ -22,7 +22,7 @@ export const getStaticPaths: GetStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
-const { Content } = Astro.props.post;
+const { Content } = Astro.props.post as { Content: any };
 ---
 
 <script is:inline>
