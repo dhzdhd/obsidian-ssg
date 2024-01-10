@@ -14,8 +14,6 @@ const data = posts.map((post, index) => {
   const rel_path = post.file.split("src/posts/")[1];
   const sanitized = rel_path.split(".md")[0];
 
-  console.log("ff" + index.toString());
-
   return { id: "ff" + index.toString(), url: "/" + sanitized, name: sanitized };
 }) satisfies TreeDataItem[];
 
@@ -32,15 +30,16 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <header class="flex h-14 w-svw fixed bg-black"></header>
+    <header class="flex items-center px-5 h-14 w-svw fixed border-[1px]">
+      <ModeToggle client:load />
+    </header>
     <Tree
       client:load
       data={data}
-      className="flex-shrink-0 fixed w-[300px] h-[100vh - 3.5rem] mt-14 border-[1px]"
+      className="flex-shrink-0 fixed w-[300px] h-svh mt-14 border-[1px]"
       initialSelectedItemId="ff0"
       folderIcon={Folder}
     />
-    <!-- <ModeToggle client:load /> -->
     <div class="pl-[300px] pt-14">
       <slot />
     </div>

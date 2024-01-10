@@ -30,5 +30,8 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.3.3",
     "use-resize-observer": "^9.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.10"
   }
 }
