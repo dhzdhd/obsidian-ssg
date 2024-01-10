@@ -10,13 +10,14 @@ import useResizeObserver from "use-resize-observer";
 interface TreeDataItem {
   id: string;
   name: string;
+  url: string;
   icon?: LucideIcon;
   children?: TreeDataItem[];
 }
 
 type TreeProps = React.HTMLAttributes<HTMLDivElement> & {
   data: TreeDataItem[] | TreeDataItem;
-  initialSlelectedItemId?: string;
+  initialSelectedItemId?: string;
   onSelectChange?: (item: TreeDataItem | undefined) => void;
   expandAll?: boolean;
   folderIcon?: LucideIcon;
@@ -27,7 +28,7 @@ const Tree = React.forwardRef<HTMLDivElement, TreeProps>(
   (
     {
       data,
-      initialSlelectedItemId,
+      initialSelectedItemId,
       onSelectChange,
       expandAll,
       folderIcon,
@@ -39,7 +40,7 @@ const Tree = React.forwardRef<HTMLDivElement, TreeProps>(
   ) => {
     const [selectedItemId, setSelectedItemId] = React.useState<
       string | undefined
-    >(initialSlelectedItemId);
+    >(initialSelectedItemId);
 
     const handleSelectChange = React.useCallback(
       (item: TreeDataItem | undefined) => {
@@ -52,7 +53,7 @@ const Tree = React.forwardRef<HTMLDivElement, TreeProps>(
     );
 
     const expandedItemIds = React.useMemo(() => {
-      if (!initialSlelectedItemId) {
+      if (!initialSelectedItemId) {
         return [] as string[];
       }
 
@@ -78,9 +79,9 @@ const Tree = React.forwardRef<HTMLDivElement, TreeProps>(
         }
       }
 
-      walkTreeItems(data, initialSlelectedItemId);
+      walkTreeItems(data, initialSelectedItemId);
       return ids;
-    }, [data, initialSlelectedItemId]);
+    }, [data, initialSelectedItemId]);
 
     const { ref: refRoot, width, height } = useResizeObserver();
 
@@ -231,7 +232,9 @@ const Leaf = React.forwardRef<
           aria-hidden="true"
         />
       )}
-      <span className="flex-grow text-sm truncate">{item.name}</span>
+      <a href={item.url} className="flex-grow text-sm truncate">
+        {item.name}
+      </a>
     </div>
   );
 });

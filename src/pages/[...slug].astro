@@ -11,8 +11,6 @@ export const getStaticPaths: GetStaticPaths = (async () => {
     const rel_path = post.file.split("src/posts/")[1];
     const sanitized = rel_path.split(".md")[0];
 
-    console.log(rel_path);
-
     return {
       params: {
         slug: sanitized,
@@ -51,9 +49,8 @@ const { Content } = Astro.props.post;
   }
 </script>
 
-<Layout>
-  <Button variant="outline">Hello</Button>
-  <article>
+<Layout title="Hello">
+  <article class="p-5">
     <Content />
   </article>
 </Layout>
