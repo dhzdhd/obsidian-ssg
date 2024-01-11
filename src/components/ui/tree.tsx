@@ -10,7 +10,7 @@ import useResizeObserver from "use-resize-observer";
 interface TreeDataItem {
   id: string;
   name: string;
-  url: string;
+  url?: string;
   icon?: LucideIcon;
   children?: TreeDataItem[];
 }
@@ -232,9 +232,13 @@ const Leaf = React.forwardRef<
           aria-hidden="true"
         />
       )}
-      <a href={item.url} className="flex-grow text-sm truncate">
-        {item.name}
-      </a>
+      {item.url ? (
+        <a href={item.url} className="flex-grow text-sm truncate">
+          {item.name}
+        </a>
+      ) : (
+        <span className="flex-grow text-sm truncate">{item.name}</span>
+      )}
     </div>
   );
 });

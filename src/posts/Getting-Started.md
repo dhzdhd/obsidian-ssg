@@ -12,7 +12,7 @@
 
 - Original spec was focused on immediate mode a.k.a an easy-to-use API that was abstracted away from the inner workings of the functionalities.
 - From 3.2 onwards, to improve customisability and flexibility, OpenGL switched to a core-profile mode that forces us to use modern practices.
-- >3.3 versions exist but all future versions of OpenGL starting from 3.3 add extra useful features to OpenGL without changing OpenGL's core mechanics.
+- 3.3 versions exist but all future versions of OpenGL starting from 3.3 add extra useful features to OpenGL without changing OpenGL's core mechanics.
 
 ### Extensions
 

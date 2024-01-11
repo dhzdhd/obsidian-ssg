@@ -1,21 +1,61 @@
 ---
 import "@/styles/globals.css";
 import { ModeToggle } from "@/components/ModeToggle";
-import Drawer from "@components/Drawer";
 import { Tree, type TreeDataItem } from "@components/ui/tree";
-import { Workflow, Folder } from "lucide-react";
+import { Search, CommandMenu } from "@components/Search";
+import { TOC } from "@components/ui/toc";
+import { Folder } from "lucide-react";
 
 interface Props {
   title: string;
 }
 
 const posts = await Astro.glob("../posts/**/*.md");
-const data = posts.map((post, index) => {
+
+let result: TreeDataItem[] = [];
+let level = { result };
+
+posts.forEach((post, index) => {
   const rel_path = post.file.split("src/posts/")[1];
   const sanitized = rel_path.split(".md")[0];
 
-  return { id: "ff" + index.toString(), url: "/" + sanitized, name: sanitized };
-}) satisfies TreeDataItem[];
+  rel_path.split("/").reduce((r, name) => {
+    if (!r[name]) {
+      r[name] = { result: [] };
+
+      if (name.endsWith(".md")) {
+        r.result.push({
+          id: `${index}`,
+          name: name.replace(".md", ""),
+          url: `/${sanitized}`,
+          children: undefined,
+        });
+      } else {
+        r.result.push({
+          id: `${index}`,
+          name,
+          children: r[name].result,
+        });
+      }
+    }
+
+    return r[name];
+  }, level);
+});
+
+const data = result;
+
+// const data = posts.map((post, index) => {
+//   const rel_path = post.file.split("src/posts/")[1];
+//   const sanitized = rel_path.split(".md")[0];
+
+//   return {
+//     id: index.toString(),
+//     url: `/${sanitized}`,
+//     name: sanitized,
+//     // icon: Folder,
+//   };
+// }) satisfies TreeDataItem[];
 
 const { title } = Astro.props;
 ---
@@ -30,19 +70,37 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <header class="flex items-center px-5 h-14 w-svw fixed border-[1px]">
-      <ModeToggle client:load />
+    <header
+      class="flex items-center bg-primary-foreground px-5 h-14 w-svw top-0 fixed border-[1px]"
+    >
+      <ModeToggle client:visible />
+      <!-- <Search client:visible /> -->
+      <CommandMenu client:load />
     </header>
     <Tree
       client:load
       data={data}
-      className="flex-shrink-0 fixed w-[300px] h-svh mt-14 border-[1px]"
-      initialSelectedItemId="ff0"
-      folderIcon={Folder}
+      className="flex-shrink-0 fixed w-[300px] h-svh top-14 border-[1px] py-3 px-3 "
     />
-    <div class="pl-[300px] pt-14">
+    <main class="mx-[300px] mt-14 min-h-svh">
       <slot />
-    </div>
-    <footer></footer>
+      <aside class="fixed right-0 top-14 w-[300px] border-[1px] h-svh p-5">
+        <TOC
+          toc={{
+            items: [
+              {
+                title: "hi",
+                url: "#coordinate-systems",
+                items: [{ title: "hi", url: "#coordinate-systems" }],
+              },
+            ],
+          }}
+          client:load
+          client:only="react"
+        />
+      </aside>
+    </main>
+    <footer class="flex items-center px-5 h-14 w-svw bg-black border-[1px]">
+    </footer>
   </body>
 </html>

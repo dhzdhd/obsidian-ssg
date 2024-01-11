@@ -12,8 +12,10 @@
   "dependencies": {
     "@astrojs/check": "^0.3.4",
     "@astrojs/react": "^3.0.9",
+    "@astrojs/svelte": "^5.0.3",
     "@astrojs/tailwind": "^5.1.0",
     "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
@@ -22,9 +24,15 @@
     "astro": "^4.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "cmdk": "^0.2.0",
     "lucide-react": "^0.307.0",
+    "lucide-svelte": "^0.309.0",
+    "mdast-util-toc": "^7.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "remark": "^15.0.1",
+    "remark-toc": "^9.0.0",
+    "svelte": "^4.2.8",
     "tailwind-merge": "^2.2.0",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
@@ -32,6 +40,8 @@
     "use-resize-observer": "^9.1.0"
   },
   "devDependencies": {
+    "@melt-ui/pp": "^0.3.0",
+    "@melt-ui/svelte": "^0.69.0",
     "@tailwindcss/typography": "^0.5.10"
   }
 }
