@@ -4,8 +4,6 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { type TreeItem } from "@components/ui/tree.svelte";
 import Tree from "@components/Tree.svelte";
 import { Search, CommandMenu } from "@components/Search";
-import { TOC } from "@components/ui/toc";
-import type { TableOfContents } from "@/lib/toc";
 
 interface Props {
   title: string;
@@ -18,14 +16,9 @@ const posts = await Astro.glob("../posts/**/*.md");
 let result: TreeItem[] = [];
 let level = { result };
 
-let headings: TableOfContents[] = [];
-
 posts.forEach((post, index) => {
   const rel_path = post.file.split("src/posts/")[1];
   const sanitized = rel_path.split(".md")[0];
-
-  console.log(post.getHeadings());
-  console.log(title);
 
   rel_path.split("/").reduce((r, name) => {
     if (!r[name]) {
@@ -50,18 +43,6 @@ posts.forEach((post, index) => {
   }, level);
 });
 const data = result;
-
-// const data = posts.map((post, index) => {
-//   const rel_path = post.file.split("src/posts/")[1];
-//   const sanitized = rel_path.split(".md")[0];
-
-//   return {
-//     id: index.toString(),
-//     url: `/${sanitized}`,
-//     name: sanitized,
-//     // icon: Folder,
-//   };
-// }) satisfies TreeDataItem[];
 ---
 
 <html lang="en">
@@ -75,29 +56,14 @@ const data = result;
   </head>
   <body>
     <header
-      class="flex items-center bg-primary-foreground px-5 h-14 w-svw top-0 fixed border-[1px]"
+      class="flex items-center bg-background px-5 h-14 w-svw top-0 fixed border-[1px]"
     >
       <ModeToggle client:visible />
       <CommandMenu client:load />
     </header>
     <Tree client:load treeItems={data} />
-    <main class="mx-[300px] mt-14 min-h-svh">
+    <main class="mx-80 mt-14 min-h-svh">
       <slot />
-      <aside class="fixed right-0 top-14 w-[300px] border-[1px] h-svh p-5">
-        <TOC
-          toc={{
-            items: [
-              {
-                title: "hi",
-                url: "#coordinate-systems",
-                items: [{ title: "hi", url: "#coordinate-systems" }],
-              },
-            ],
-          }}
-          client:load
-          client:only="react"
-        />
-      </aside>
     </main>
     <footer class="flex items-center px-5 h-14 w-svw bg-black border-[1px]">
     </footer>

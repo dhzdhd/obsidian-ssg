@@ -18,7 +18,7 @@
 
 </script>
 
-<ul class="flex-shrink-0 fixed w-[300px] h-svh top-14 border-[1px] py-3 px-3 list-none" {...$tree} >
+<ul class="flex-shrink-0 fixed w-80 h-svh top-14 border-[1px] py-5 px-3 list-none" {...$tree} >
     <Tree
         treeItems={treeItems}
     />

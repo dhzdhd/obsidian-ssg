@@ -1,8 +1,10 @@
 ---
 import type { GetStaticPaths } from "astro";
 import "@/styles/globals.css";
-import { Button } from "@components/ui/button";
 import Layout from "../layouts/Layout.astro";
+import TOC from "@components/TOC.svelte";
+import type { TableOfContents, Item } from "@/lib/toc";
+import type { MarkdownInstance } from "astro";
 
 export const getStaticPaths: GetStaticPaths = (async () => {
   const posts = await Astro.glob("../posts/**/*.md");
@@ -23,6 +25,16 @@ export const getStaticPaths: GetStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { Content } = Astro.props.post as { Content: any };
+
+let headings: TableOfContents = { items: [] };
+const post = Astro.props.post as MarkdownInstance<Record<string, any>>;
+
+let temp = {
+  title: "hi",
+  url: "#coordinate-systems",
+  items: [{ title: "hi", url: "#coordinate-systems" }],
+};
+const data = post.getHeadings().filter((val) => val.depth != 1);
 ---
 
 <script is:inline>
@@ -50,7 +62,10 @@ const { Content } = Astro.props.post as { Content: any };
 </script>
 
 <Layout title="Hello">
+  <aside class="fixed right-0 top-14 w-80 border-[1px] h-svh p-5">
+    <TOC client:load data={data} />
+  </aside>
   <article class="p-5 prose prose-base dark:prose-invert max-w-none">
     <Content />
   </article>
-</Layout>
+</Layout>} />

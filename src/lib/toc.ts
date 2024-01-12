@@ -15,7 +15,7 @@ function flattenNode(node) {
   return p.join(``);
 }
 
-interface Item {
+export interface Item {
   title: string;
   url: string;
   items?: Item[];
