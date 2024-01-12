@@ -51,15 +51,20 @@ const data = result;
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+      rel="stylesheet"
+    />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
   <body>
     <header
-      class="flex items-center bg-background px-5 h-14 w-svw top-0 fixed border-[1px]"
+      class="flex justify-between items-center bg-background px-5 h-14 w-svw top-0 fixed border-[1px]"
     >
+      <h1 class="text-2xl">Obsidian</h1>
       <ModeToggle client:visible />
-      <CommandMenu client:load />
+      <!-- <CommandMenu client:load /> -->
     </header>
     <Tree client:load treeItems={data} />
     <main class="mx-80 mt-14 min-h-svh">
