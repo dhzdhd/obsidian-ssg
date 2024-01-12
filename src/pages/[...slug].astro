@@ -3,7 +3,6 @@ import type { GetStaticPaths } from "astro";
 import "@/styles/globals.css";
 import Layout from "../layouts/Layout.astro";
 import TOC from "@components/TOC.svelte";
-import type { TableOfContents, Item } from "@/lib/toc";
 import type { MarkdownInstance } from "astro";
 
 export const getStaticPaths: GetStaticPaths = (async () => {
@@ -26,14 +25,7 @@ export const getStaticPaths: GetStaticPaths = (async () => {
 
 const { Content } = Astro.props.post as { Content: any };
 
-let headings: TableOfContents = { items: [] };
 const post = Astro.props.post as MarkdownInstance<Record<string, any>>;
-
-let temp = {
-  title: "hi",
-  url: "#coordinate-systems",
-  items: [{ title: "hi", url: "#coordinate-systems" }],
-};
 const data = post.getHeadings().filter((val) => val.depth != 1);
 ---
 
