@@ -1,12 +1,11 @@
 <script context="module" lang="ts">
-  import { ArrowLeft, Folder, FolderOpen } from "lucide-svelte";
-
-  type Icon = "folder";
+  import { ArrowLeft, Folder, FolderOpen, File } from "lucide-svelte";
+  type Icon = "folder" | "file";
 
   export type TreeItem = {
     title: string;
     icon: Icon;
-
+    url?: string;
     children?: TreeItem[];
   };
 
@@ -30,26 +29,32 @@
   } = getContext<TreeView>("tree");
 </script>
 
-{#each treeItems as { title, icon, children }, i}
+{#each treeItems as { title, icon, url, children }, i}
   {@const itemId = `${title}-${i}`}
   {@const hasChildren = !!children?.length}
 
   <li class={level !== 1 ? "pl-4" : ""}>
     <button
-      class="flex items-center gap-1 rounded-md p-1 focus:bg-magnum-200"
+      class="flex items-center gap-1 w-full rounded-md p-1 dark:focus:bg-primary-foreground"
       use:melt={$item({
         id: itemId,
         hasChildren,
       })}
     >
       <!-- Add icon. -->
+      <!-- TODO: Convert select icon to dropdown -->
       {#if icon === "folder" && hasChildren && $isExpanded(itemId)}
         <svelte:component this={icons["folderOpen"]} class="h-4 w-4" />
       {:else}
         <svelte:component this={icons[icon]} class="h-4 w-4" />
       {/if}
 
-      <span class="select-none">{title}</span>
+      {#if url}
+        <a href={url} class="select-none">{title}</a>
+      {:else}
+        <span class="select-none">{title}</span>
+      {/if}
+
 
       <!-- Selected icon. -->
       {#if $isSelected(itemId)}

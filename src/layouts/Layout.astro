@@ -1,40 +1,47 @@
 ---
 import "@/styles/globals.css";
 import { ModeToggle } from "@/components/ModeToggle";
-import { Tree, type TreeDataItem } from "@components/ui/tree";
+import { type TreeItem } from "@components/ui/tree.svelte";
+import Tree from "@components/Tree.svelte";
 import { Search, CommandMenu } from "@components/Search";
 import { TOC } from "@components/ui/toc";
-import { Folder } from "lucide-react";
+import type { TableOfContents } from "@/lib/toc";
 
 interface Props {
   title: string;
 }
 
+const { title } = Astro.props;
+
 const posts = await Astro.glob("../posts/**/*.md");
 
-let result: TreeDataItem[] = [];
+let result: TreeItem[] = [];
 let level = { result };
+
+let headings: TableOfContents[] = [];
 
 posts.forEach((post, index) => {
   const rel_path = post.file.split("src/posts/")[1];
   const sanitized = rel_path.split(".md")[0];
 
+  console.log(post.getHeadings());
+  console.log(title);
+
   rel_path.split("/").reduce((r, name) => {
     if (!r[name]) {
       r[name] = { result: [] };
-
       if (name.endsWith(".md")) {
         r.result.push({
-          id: `${index}`,
-          name: name.replace(".md", ""),
+          title: name.replace(".md", ""),
           url: `/${sanitized}`,
           children: undefined,
+          icon: "file",
         });
       } else {
         r.result.push({
-          id: `${index}`,
-          name,
+          title: name,
           children: r[name].result,
+          icon: "folder",
         });
       }
     }
@@ -42,7 +49,6 @@ posts.forEach((post, index) => {
     return r[name];
   }, level);
 });
-
 const data = result;
 
 // const data = posts.map((post, index) => {
@@ -56,8 +62,6 @@ const data = result;
 //     // icon: Folder,
 //   };
 // }) satisfies TreeDataItem[];
-
-const { title } = Astro.props;
 ---
 
 <html lang="en">
@@ -74,14 +78,9 @@ const { title } = Astro.props;
       class="flex items-center bg-primary-foreground px-5 h-14 w-svw top-0 fixed border-[1px]"
     >
       <ModeToggle client:visible />
-      <!-- <Search client:visible /> -->
       <CommandMenu client:load />
     </header>
-    <Tree
-      client:load
-      data={data}
-      className="flex-shrink-0 fixed w-[300px] h-svh top-14 border-[1px] py-3 px-3 "
-    />
+    <Tree client:load treeItems={data} />
     <main class="mx-[300px] mt-14 min-h-svh">
       <slot />
       <aside class="fixed right-0 top-14 w-[300px] border-[1px] h-svh p-5">
