@@ -5,7 +5,10 @@ import tailwind from "@astrojs/tailwind";
 import svelte from "@astrojs/svelte";
 
 import remarkMath from "remark-math";
+import remarkObsidian from "remark-obsidian";
 import rehypeKatex from "rehype-katex";
+import rehypeStringify from "rehype-stringify";
+import remarkCodeTitle from "remark-code-title";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,7 +20,11 @@ export default defineConfig({
     svelte(),
   ],
   markdown: {
-    remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex],
+    syntaxHighlight: "shiki",
+    shikiConfig: {
+      theme: "one-dark-pro",
+    },
+    remarkPlugins: [remarkCodeTitle, remarkMath],
+    rehypePlugins: [rehypeKatex, rehypeStringify],
   },
 });

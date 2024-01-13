@@ -4,6 +4,7 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { type TreeItem } from "@components/ui/tree.svelte";
 import Tree from "@components/Tree.svelte";
 import { Search, CommandMenu } from "@components/Search";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -45,6 +46,31 @@ posts.forEach((post, index) => {
 const data = result;
 ---
 
+<script is:inline>
+  function setDarkMode(document) {
+    const getThemePreference = () => {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("theme")
+      ) {
+        return localStorage.getItem("theme");
+      }
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    };
+    const isDark = getThemePreference() === "dark";
+
+    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+  }
+
+  setDarkMode(document);
+
+  document.addEventListener("astro:before-swap", (ev) => {
+    // Pass the incoming document to set the theme on it
+    setDarkMode(ev.newDocument);
+  });
+</script>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -57,13 +83,14 @@ const data = result;
     />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <ViewTransitions />
   </head>
   <body>
     <header
       class="flex justify-between items-center bg-background px-5 h-14 w-svw top-0 fixed border-[1px]"
     >
       <h1 class="text-2xl">Obsidian</h1>
-      <ModeToggle client:visible />
+      <ModeToggle transition:persist client:visible />
       <!-- <CommandMenu client:load /> -->
     </header>
     <Tree client:load treeItems={data} />

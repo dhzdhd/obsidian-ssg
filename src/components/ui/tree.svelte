@@ -19,6 +19,7 @@
 <script lang="ts">
   import { melt, type TreeView } from "@melt-ui/svelte";
   import { getContext } from "svelte";
+  import { navigate } from "astro:transitions/client";
 
   export let treeItems: TreeItem[];
   export let level = 1;
@@ -54,7 +55,6 @@
       {:else}
         <span class="select-none">{title}</span>
       {/if}
-
 
       <!-- Selected icon. -->
       {#if $isSelected(itemId)}

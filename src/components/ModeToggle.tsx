@@ -25,6 +25,8 @@ export function ModeToggle() {
       (theme === "system" &&
         window.matchMedia("(prefers-color-scheme: dark)").matches);
     document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   return (
