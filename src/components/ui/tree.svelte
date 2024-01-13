@@ -1,5 +1,11 @@
 <script context="module" lang="ts">
-  import { ArrowLeft, Folder, FolderOpen, File } from "lucide-svelte";
+  import {
+    ArrowLeft,
+    Folder,
+    FolderOpen,
+    ChevronDown,
+    ChevronRight,
+  } from "lucide-svelte";
   type Icon = "folder" | "file";
 
   export type TreeItem = {
@@ -36,7 +42,7 @@
 
   <li class={level !== 1 ? "pl-4" : ""}>
     <button
-      class="flex items-center gap-1 w-full rounded-md p-1 dark:focus:bg-primary-foreground"
+      class="flex items-center gap-1 w-full rounded-md p-1 text-start dark:focus:bg-primary-foreground"
       use:melt={$item({
         id: itemId,
         hasChildren,
@@ -44,21 +50,25 @@
     >
       <!-- Add icon. -->
       <!-- TODO: Convert select icon to dropdown -->
-      {#if icon === "folder" && hasChildren && $isExpanded(itemId)}
+      <!-- {#if icon === "folder" && hasChildren && $isExpanded(itemId)}
         <svelte:component this={icons["folderOpen"]} class="h-4 w-4" />
       {:else}
         <svelte:component this={icons[icon]} class="h-4 w-4" />
-      {/if}
+      {/if} -->
 
       {#if url}
-        <a href={url} class="select-none">{title}</a>
+        <a href={url} class="select-none w-full">{title}</a>
       {:else}
-        <span class="select-none">{title}</span>
+        <span class="select-none w-full">{title}</span>
       {/if}
 
       <!-- Selected icon. -->
-      {#if $isSelected(itemId)}
-        <svelte:component this={icons["highlight"]} class="h-4 w-4" />
+      {#if icon === "folder"}
+        {#if $isExpanded(itemId)}
+          <svelte:component this={ChevronDown} class="h-4 w-4" />
+        {:else}
+          <svelte:component this={ChevronRight} class="h-4 w-4" />
+        {/if}
       {/if}
     </button>
 
