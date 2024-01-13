@@ -25,7 +25,6 @@
 <script lang="ts">
   import { melt, type TreeView } from "@melt-ui/svelte";
   import { getContext } from "svelte";
-  import { navigate } from "astro:transitions/client";
 
   export let treeItems: TreeItem[];
   export let level = 1;
@@ -42,7 +41,7 @@
 
   <li class={level !== 1 ? "pl-4" : ""}>
     <button
-      class="flex items-center gap-1 w-full rounded-md p-1 text-start dark:focus:bg-primary-foreground"
+      class="flex items-center gap-1 w-full rounded-md my-1 p-1 min-h-10 text-start focus:bg-secondary dark:focus:bg-primary-foreground"
       use:melt={$item({
         id: itemId,
         hasChildren,
