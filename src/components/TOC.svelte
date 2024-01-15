@@ -8,12 +8,12 @@
 
 <h1 class="pb-3 pl-2">On this page</h1>
 <ul>
-  {#each data as item, index}
+  {#each data as item}
     <li
       style={`padding-left: ${(item.depth - 2) * 1.2 + 0.5}rem`}
-      class="py-1 hover:bg-secondary dark:hover:bg-primary-foreground"
+      class="py-1 hover:bg-secondary dark:hover:bg-primary-foreground w-full"
     >
-      <a href={`#${item.slug}`}>{item.text}</a>
+      <a class="w-full inline-flex" href={`#${item.slug}`}>{item.text}</a>
     </li>
   {/each}
 </ul>

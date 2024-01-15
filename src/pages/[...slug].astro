@@ -30,9 +30,9 @@ const data = post.getHeadings().filter((val) => val.depth != 1);
 ---
 
 <Layout transition:persist title="Hello">
-  <aside class="fixed right-0 top-14 w-80 border-[1px] h-svh p-5">
+  <!-- <aside class="fixed right-0 top-14 w-80 border-l-[1px] h-svh p-5">
     <TOC client:load data={data} />
-  </aside>
+  </aside> -->
   <article class="p-5 prose prose-base dark:prose-invert max-w-none">
     <Content />
   </article>

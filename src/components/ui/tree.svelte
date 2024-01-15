@@ -41,7 +41,7 @@
 
   <li class={level !== 1 ? "pl-4" : ""}>
     <button
-      class="flex items-center gap-1 w-full rounded-md my-1 p-1 min-h-10 text-start focus:bg-secondary dark:focus:bg-primary-foreground"
+      class="flex items-center gap-1 w-full rounded-md my-1 p-1 min-h-10 text-start hover:bg-secondary dark:hover:bg-primary-foreground focus:bg-secondary dark:focus:bg-primary-foreground"
       use:melt={$item({
         id: itemId,
         hasChildren,
