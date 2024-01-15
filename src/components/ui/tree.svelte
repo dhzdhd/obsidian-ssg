@@ -47,8 +47,7 @@
         hasChildren,
       })}
     >
-      <!-- Add icon. -->
-      <!-- TODO: Convert select icon to dropdown -->
+      <!-- Folder icon. -->
       <!-- {#if icon === "folder" && hasChildren && $isExpanded(itemId)}
         <svelte:component this={icons["folderOpen"]} class="h-4 w-4" />
       {:else}
