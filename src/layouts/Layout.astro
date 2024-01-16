@@ -1,9 +1,9 @@
 ---
 import "@/styles/globals.css";
 import { ModeToggle } from "@/components/ModeToggle";
-import { type TreeItem } from "@components/ui/tree.svelte";
+import { type TreeItem } from "@/lib/types";
 import Tree from "@components/Tree.svelte";
-import { Search, CommandMenu } from "@components/Search";
+import { CommandMenu } from "@components/Search";
 import { ViewTransitions } from "astro:transitions";
 
 interface Props {
@@ -66,9 +66,8 @@ const data = result;
 
   setDarkMode(document);
 
-  document.addEventListener("astro:before-swap", (ev) => {
-    // Pass the incoming document to set the theme on it
-    setDarkMode(ev.newDocument);
+  document.addEventListener("astro:before-swap", (event) => {
+    setDarkMode(event.newDocument);
   });
 </script>
 <html lang="en">
@@ -91,8 +90,7 @@ const data = result;
     >
       <h1 class="text-2xl">Obsidian</h1>
       <div>
-        <!-- pass data to switch page -->
-        <CommandMenu client:load />
+        <CommandMenu {data} client:load />
         <ModeToggle transition:persist client:visible />
       </div>
     </header>

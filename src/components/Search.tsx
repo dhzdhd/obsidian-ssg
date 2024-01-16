@@ -12,8 +12,13 @@ import {
 } from "@/components/ui/command";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { type TreeItem } from "@/lib/types";
 
-export function CommandMenu() {
+type Props = {
+  data: TreeItem[];
+};
+
+export function CommandMenu({ data }: Props) {
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
@@ -37,10 +42,16 @@ export function CommandMenu() {
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Suggestions">
+          <CommandGroup heading="Pages">
             <CommandItem>Calendar</CommandItem>
             <CommandItem>Search Emoji</CommandItem>
             <CommandItem>Calculator</CommandItem>
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Headings">
+            <CommandItem>Calendarr</CommandItem>
+            <CommandItem>Search Emojii</CommandItem>
+            <CommandItem>Calculatorr</CommandItem>
           </CommandGroup>
         </CommandList>
       </CommandDialog>

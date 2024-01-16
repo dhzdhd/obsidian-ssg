@@ -6,14 +6,6 @@
     ChevronDown,
     ChevronRight,
   } from "lucide-svelte";
-  type Icon = "folder" | "file";
-
-  export type TreeItem = {
-    title: string;
-    icon: Icon;
-    url?: string;
-    children?: TreeItem[];
-  };
 
   export const icons = {
     folder: Folder,
@@ -25,6 +17,7 @@
 <script lang="ts">
   import { melt, type TreeView } from "@melt-ui/svelte";
   import { getContext } from "svelte";
+  import type { TreeItem } from "@/lib/types";
 
   export let treeItems: TreeItem[];
   export let level = 1;

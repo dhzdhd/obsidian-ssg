@@ -9,8 +9,8 @@ export const getStaticPaths: GetStaticPaths = (async () => {
   const posts = await Astro.glob("../posts/**/*.md");
 
   return posts.map((post) => {
-    const rel_path = post.file.split("src/posts/")[1];
-    const sanitized = rel_path.split(".md")[0];
+    const path = post.file.split("src/posts/")[1];
+    const sanitized = path.split(".md")[0];
 
     return {
       params: {
@@ -26,13 +26,13 @@ export const getStaticPaths: GetStaticPaths = (async () => {
 const { Content } = Astro.props.post as { Content: any };
 
 const post = Astro.props.post as MarkdownInstance<Record<string, any>>;
-const data = post.getHeadings().filter((val) => val.depth != 1);
+const headings = post.getHeadings().filter((val) => val.depth != 1);
 ---
 
 <Layout transition:persist title="Hello">
-  <TOC client:load data={data} />
+  <TOC client:load data={headings} />
   <article
-    class="p-5 prose prose-base dark:prose-invert max-w-none overflow-scroll"
+    class="p-5 prose prose-base dark:prose-invert max-w-none overflow-x-auto"
   >
     <Content />
   </article>

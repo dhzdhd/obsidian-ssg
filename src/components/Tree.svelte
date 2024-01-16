@@ -1,6 +1,6 @@
 <script lang="ts">
   import Tree from "@components/ui/tree.svelte";
-  import { type TreeItem } from "@components/ui/tree.svelte";
+  import { type TreeItem } from "@/lib/types";
   import { setContext } from "svelte";
   import { createTreeView } from "@melt-ui/svelte";
   import { PanelLeft } from "lucide-svelte";
