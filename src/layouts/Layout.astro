@@ -90,8 +90,11 @@ const data = result;
       class="z-10 flex justify-between items-center px-5 bg-background h-14 w-dvw top-0 fixed border-b-[1px]"
     >
       <h1 class="text-2xl">Obsidian</h1>
-      <ModeToggle transition:persist client:visible />
-      <!-- <CommandMenu client:load /> -->
+      <div>
+        <!-- pass data to switch page -->
+        <CommandMenu client:load />
+        <ModeToggle transition:persist client:visible />
+      </div>
     </header>
     <Tree client:load treeItems={data} />
     <main class="ml-10 lg:ml-80 mr-10 lg:mr-80 mt-14 min-h-svh">
