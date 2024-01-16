@@ -28,7 +28,7 @@
 {#if visible}
   <ul
     transition:fly={{ x: -200 }}
-    class="flex-shrink-0 fixed w-80 h-svh top-14 border-r-[1px] py-5 px-3 list-none bg-primary-foreground dark:bg-background"
+    class="z-10 flex-shrink-0 fixed w-80 h-svh top-14 border-r-[1px] py-5 px-3 list-none bg-primary-foreground dark:bg-background"
     {...$tree}
   >
     <Tree {treeItems} />
@@ -36,5 +36,5 @@
 {/if}
 <button
   on:click={() => (visible = !visible)}
-  class="fixed bottom-2 left-2 opacity-70"><PanelLeft /></button
+  class="z-10 fixed bottom-2 left-2 opacity-70"><PanelLeft /></button
 >

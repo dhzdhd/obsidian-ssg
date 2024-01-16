@@ -17,7 +17,7 @@
 {#if visible}
   <aside
     transition:fly={{ x: 200 }}
-    class="fixed right-0 top-14 w-80 border-l-[1px] h-svh p-5 bg-primary-foreground dark:bg-background"
+    class="z-10 fixed right-0 top-14 w-80 border-l-[1px] h-svh p-5 bg-primary-foreground dark:bg-background"
   >
     <nav>
       <h1 class="pb-3 pl-2">On this page</h1>
@@ -36,5 +36,5 @@
 {/if}
 <button
   on:click={() => (visible = !visible)}
-  class="fixed bottom-2 right-2 opacity-70"><PanelRight /></button
+  class="z-10 fixed bottom-2 right-2 opacity-70"><PanelRight /></button
 >
