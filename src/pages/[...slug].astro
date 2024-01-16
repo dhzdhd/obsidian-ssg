@@ -31,7 +31,9 @@ const data = post.getHeadings().filter((val) => val.depth != 1);
 
 <Layout transition:persist title="Hello">
   <TOC client:load data={data} />
-  <article class="p-5 prose prose-base dark:prose-invert max-w-none">
+  <article
+    class="p-5 prose prose-base dark:prose-invert max-w-none overflow-scroll"
+  >
     <Content />
   </article>
 </Layout>
