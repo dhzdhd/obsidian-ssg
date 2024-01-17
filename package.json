@@ -25,6 +25,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",
+    "d3": "^7.8.5",
     "lucide-react": "^0.307.0",
     "lucide-svelte": "^0.309.0",
     "mdast-util-toc": "^7.0.0",

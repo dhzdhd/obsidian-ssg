@@ -6,3 +6,14 @@ export type TreeItem = {
 };
 
 type Icon = "folder" | "file";
+
+export type SearchData = {
+  url: string;
+  title: string;
+};
+
+export type SearchHeading = {
+  url: string;
+  slug: string;
+  title: string;
+};

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -8,17 +7,17 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { type TreeItem } from "@/lib/types";
+import type { SearchData, SearchHeading } from "@/lib/types";
 
 type Props = {
-  data: TreeItem[];
+  searchData: SearchData[];
+  searchHeadings: SearchHeading[];
 };
 
-export function CommandMenu({ data }: Props) {
+export function CommandMenu({ searchData, searchHeadings }: Props) {
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
@@ -43,15 +42,26 @@ export function CommandMenu({ data }: Props) {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Pages">
-            <CommandItem>Calendar</CommandItem>
-            <CommandItem>Search Emoji</CommandItem>
-            <CommandItem>Calculator</CommandItem>
+            {searchData.map((item) => (
+              <a href={item.url}>
+                <CommandItem className="cursor-pointer">
+                  {item.title}
+                </CommandItem>
+              </a>
+            ))}
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Headings">
-            <CommandItem>Calendarr</CommandItem>
-            <CommandItem>Search Emojii</CommandItem>
-            <CommandItem>Calculatorr</CommandItem>
+            {searchHeadings.map((item) => (
+              <a
+                onClick={() => setOpen(false)}
+                href={`${item.url}${item.slug}`}
+              >
+                <CommandItem className="cursor-pointer">
+                  {item.title}
+                </CommandItem>
+              </a>
+            ))}
           </CommandGroup>
         </CommandList>
       </CommandDialog>

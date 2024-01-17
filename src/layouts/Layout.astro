@@ -1,7 +1,7 @@
 ---
 import "@/styles/globals.css";
 import { ModeToggle } from "@/components/ModeToggle";
-import { type TreeItem } from "@/lib/types";
+import type { TreeItem, SearchData, SearchHeading } from "@/lib/types";
 import Tree from "@components/Tree.svelte";
 import { CommandMenu } from "@components/Search";
 import { ViewTransitions } from "astro:transitions";
@@ -44,6 +44,31 @@ posts.forEach((post, index) => {
   }, level);
 });
 const data = result;
+
+const searchData: SearchData[] = posts.map((post) => {
+  const path = post.file.split("src/posts/")[1];
+  const sanitized = path.split(".md")[0];
+
+  return {
+    url: `/${sanitized}`,
+    title: sanitized,
+  } satisfies SearchData;
+});
+
+const searchHeadings: SearchHeading[] = posts.flatMap((post) => {
+  const path = post.file.split("src/posts/")[1];
+  const sanitized = path.split(".md")[0];
+
+  return post.getHeadings().map((heading) => {
+    const hash = "#".repeat(heading.depth);
+
+    return {
+      url: `/${sanitized}`,
+      slug: `#${heading.slug}`,
+      title: `${sanitized}${hash}${heading.slug}`,
+    } satisfies SearchHeading;
+  });
+});
 ---
 
 <script is:inline>
@@ -90,7 +115,7 @@ const data = result;
     >
       <h1 class="text-2xl">Obsidian</h1>
       <div>
-        <CommandMenu {data} client:load />
+        <CommandMenu client:load {searchData} {searchHeadings} />
         <ModeToggle transition:persist client:visible />
       </div>
     </header>
@@ -99,7 +124,7 @@ const data = result;
       <slot />
     </main>
     <footer
-      class="flex items-center px-5 relative h-14 w-full bg-black border-[1px]"
+      class="z-10 flex items-center px-5 relative h-14 w-full bg-black border-t-[1px]"
     >
     </footer>
   </body>
