@@ -69,4 +69,8 @@
   h6 {
     @apply scroll-mt-14;
   }
+
+  pre {
+    @apply bg-secondary dark:bg-background border-[1px] !important;
+  }
 }

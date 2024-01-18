@@ -116,7 +116,7 @@ const searchHeadings: SearchHeading[] = posts.flatMap((post) => {
     >
       <h1 class="text-2xl">Obsidian</h1>
       <div>
-        <ForceGraph client:load />
+        <ForceGraph client:only="react" />
         <CommandMenu client:load {searchData} {searchHeadings} />
         <ModeToggle transition:persist client:visible />
       </div>
