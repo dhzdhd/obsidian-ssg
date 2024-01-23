@@ -10,6 +10,9 @@ import remarkObsidian from "remark-obsidian";
 import rehypeKatex from "rehype-katex";
 import rehypeStringify from "rehype-stringify";
 import remarkCodeTitle from "remark-code-title";
+import remarkObsidianLink from "remark-obsidian-link";
+import remarkParse from "remark-parse";
+import remarkStringify from "remark-stringify";
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,11 +25,19 @@ export default defineConfig({
   ],
   redirects: config.redirects,
   markdown: {
+    gfm: true,
     syntaxHighlight: "shiki",
     shikiConfig: {
       theme: "one-dark-pro",
     },
-    remarkPlugins: [remarkCodeTitle, remarkMath],
+    remarkPlugins: [
+      remarkParse,
+      remarkStringify,
+      remarkCodeTitle,
+      remarkMath,
+      // remarkObsidian,
+    ],
     rehypePlugins: [rehypeKatex, rehypeStringify],
+    remarkRehype: { allowDangerousHtml: true },
   },
 });
