@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
-import config from "./src/config/config.ts";
+import config from "./src/.config/config.ts";
 
 import svelte from "@astrojs/svelte";
 
