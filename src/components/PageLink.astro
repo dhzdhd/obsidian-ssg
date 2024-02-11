@@ -1,0 +1,15 @@
+---
+const { link, name, direction } = Astro.props as {
+  link: string;
+  name: string;
+  direction: "left" | "right";
+};
+
+import { ChevronLeft, ChevronRight } from "lucide-svelte";
+---
+
+<a href={link} class="flex flex-row gap-2 h-full items-center text-center">
+  {direction == "left" && <ChevronLeft />}
+  <span class="flex-grow">{name}</span>
+  {direction == "right" && <ChevronRight />}
+</a>

@@ -3,7 +3,20 @@ import type { GetStaticPaths } from "astro";
 import "@/styles/globals.css";
 import Layout from "../layouts/Layout.astro";
 import TOC from "@components/TOC.svelte";
+import PageLink from "@components/PageLink.astro";
 import type { MarkdownInstance } from "astro";
+import { Button } from "@components/ui/button";
+import { navigate } from "astro:transitions/client";
+
+const getSlug = (post: MarkdownInstance<Record<string, any>>): string => {
+  const path = post.file.split("src/posts/")[1];
+  return path.split(".md")[0];
+};
+
+const getName = (slug: string): string => {
+  const segments = slug.split("/");
+  return segments[segments.length - 1];
+};
 
 export const getStaticPaths: GetStaticPaths = (async () => {
   const posts = await Astro.glob("../posts/**/*.md");
@@ -23,17 +36,40 @@ export const getStaticPaths: GetStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
+const posts = await Astro.glob("../posts/**/*.md");
+
 const { Content } = Astro.props.post as { Content: any };
 
 const post = Astro.props.post as MarkdownInstance<Record<string, any>>;
+
+const indexOfCurrent = posts.indexOf(post);
+const prev =
+  indexOfCurrent == 0 ? undefined : getSlug(posts[indexOfCurrent - 1]);
+const next =
+  indexOfCurrent == posts.length - 1
+    ? undefined
+    : getSlug(posts[indexOfCurrent + 1]);
 const headings = post.getHeadings().filter((val) => val.depth != 1);
 ---
 
-<Layout transition:persist title="Hello">
+<Layout title="Hello">
   <TOC client:visible data={headings} />
   <article
     class="p-5 prose prose-base dark:prose-invert max-w-none overflow-x-auto"
   >
     <Content />
   </article>
+  <hr />
+  <div class="px-5 flex flex-row h-16 justify-between">
+    {
+      prev && (
+        <PageLink name={getName(prev)} link={`/${prev}`} direction="left" />
+      )
+    }
+    {
+      next && (
+        <PageLink name={getName(next)} link={`/${next}`} direction="right" />
+      )
+    }
+  </div>
 </Layout>

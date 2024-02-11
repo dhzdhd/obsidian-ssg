@@ -23,6 +23,10 @@ export default defineConfig({
     }),
     svelte(),
   ],
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "load",
+  },
   redirects: config.redirects,
   markdown: {
     gfm: true,

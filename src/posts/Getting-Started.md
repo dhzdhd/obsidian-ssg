@@ -38,7 +38,7 @@ if(GL_ARB_extension_name) {
 - OpenGL libraries are written in C
 - Due to translation problems, OpenGL has the object abstraction.
 - An object in OpenGL is a collection of options that represents a subset of OpenGL's state.
-```c
+```c copy
 struct object_name {
     float  option1;
     int    option2;

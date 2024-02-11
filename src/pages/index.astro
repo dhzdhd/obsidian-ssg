@@ -14,10 +14,11 @@ try {
 }
 ---
 
-<Layout transition:persist title="Hello">
+<Layout title="Hello">
   <article
     class="p-5 prose prose-base dark:prose-invert max-w-none overflow-x-auto"
   >
+    <!-- TODO: Improve default index html -->
     {isIndexExists ? <Content /> : <h1>Hahaha</h1>}
   </article>
 </Layout>
