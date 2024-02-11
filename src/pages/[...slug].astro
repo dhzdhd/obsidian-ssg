@@ -1,12 +1,9 @@
 ---
-import type { GetStaticPaths } from "astro";
+import type { GetStaticPaths, MarkdownInstance } from "astro";
 import "@/styles/globals.css";
 import Layout from "../layouts/Layout.astro";
 import TOC from "@components/TOC.svelte";
 import PageLink from "@components/PageLink.astro";
-import type { MarkdownInstance } from "astro";
-import { Button } from "@components/ui/button";
-import { navigate } from "astro:transitions/client";
 
 const getSlug = (post: MarkdownInstance<Record<string, any>>): string => {
   const path = post.file.split("src/posts/")[1];
