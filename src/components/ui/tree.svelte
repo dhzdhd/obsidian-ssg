@@ -34,7 +34,7 @@
 
   <li class={level !== 1 ? "pl-4" : ""}>
     <button
-      class="flex items-center gap-1 w-full rounded-md my-1 p-1 min-h-10 text-start hover:bg-secondary dark:hover:bg-primary-foreground focus:bg-secondary dark:focus:bg-primary-foreground"
+      class="flex items-center gap-1 px-2 w-full rounded-md my-1 min-h-10 text-start hover:bg-secondary dark:hover:bg-primary-foreground focus:bg-secondary dark:focus:bg-primary-foreground"
       use:melt={$item({
         id: itemId,
         hasChildren,
@@ -48,9 +48,9 @@
       {/if} -->
 
       {#if url}
-        <a href={url} class="select-none w-full">{title}</a>
+        <a href={url} class="select-none w-full py-1">{title}</a>
       {:else}
-        <span class="select-none w-full">{title}</span>
+        <span class="select-none w-full py-1">{title}</span>
       {/if}
 
       <!-- Selected icon. -->
