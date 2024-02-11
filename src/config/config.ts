@@ -1,5 +1,5 @@
 const config = {
-  redirects: { "/": "/Getting-Started" },
+  redirects: {},
 };
 
 export default config;

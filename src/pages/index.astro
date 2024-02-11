@@ -1,8 +1,23 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+
+let Content: AstroComponentFactory;
+let isIndexExists = false;
+
+try {
+  const posts = await Astro.glob("../config/index.md");
+  Content = posts[0].Content;
+  isIndexExists = true;
+} catch (e) {
+  isIndexExists = false;
+}
 ---
 
-<Layout title="Hi">
-  <!-- TODO: Get md file from config/ and convert to html dynamically -->
-  <h1>Hello!</h1>
+<Layout transition:persist title="Hello">
+  <article
+    class="p-5 prose prose-base dark:prose-invert max-w-none overflow-x-auto"
+  >
+    {isIndexExists ? <Content /> : <h1>Hahaha</h1>}
+  </article>
 </Layout>

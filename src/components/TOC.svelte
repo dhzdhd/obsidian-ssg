@@ -17,7 +17,7 @@
 {#if visible}
   <aside
     transition:fly={{ x: 200 }}
-    class="z-10 fixed right-0 top-14 w-80 border-l-[1px] h-svh p-5 bg-primary-foreground dark:bg-background"
+    class="overflow-y-auto z-10 fixed right-0 pb-32 w-80 border-l-[1px] h-svh p-5 bg-primary-foreground dark:bg-background"
   >
     <nav>
       <h1 class="pb-3 pl-2">On this page</h1>
