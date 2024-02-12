@@ -1,0 +1,18 @@
+diff --git a/node_modules/@portaljs/remark-wiki-link/dist/index.js b/node_modules/@portaljs/remark-wiki-link/dist/index.js
+index 5292ee3..88c5dfd 100644
+--- a/node_modules/@portaljs/remark-wiki-link/dist/index.js
++++ b/node_modules/@portaljs/remark-wiki-link/dist/index.js
+@@ -345,11 +345,12 @@ function fromMarkdown() {
+     current.data.alias = alias;
+   }
+   function exitWikiLink(token) {
+-    var wikiLink = this.exit(token);
++    var wikiLink = top(this.stack);
+     var _wikiLink$data = wikiLink.data,
+       isEmbed = _wikiLink$data.isEmbed,
+       target = _wikiLink$data.target,
+       alias = _wikiLink$data.alias;
++    this.exit(token);
+     // eslint-disable-next-line no-useless-escape
+     var wikiLinkWithHeadingPattern = /^((?:[\0-\t\x0B\f\x0E-\u2027\u202A-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*?)(#(?:[\0-\t\x0B\f\x0E-\u2027\u202A-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])*)?$/;
+     var _target$match = target.match(wikiLinkWithHeadingPattern),

@@ -6,13 +6,12 @@ import config from "./src/config/config.ts";
 import svelte from "@astrojs/svelte";
 
 import remarkMath from "remark-math";
-import remarkObsidian from "remark-obsidian";
 import rehypeKatex from "rehype-katex";
 import rehypeStringify from "rehype-stringify";
 import remarkCodeTitle from "remark-code-title";
-import remarkObsidianLink from "remark-obsidian-link";
 import remarkParse from "remark-parse";
 import remarkStringify from "remark-stringify";
+import { remarkWikiLink, getPermalinks } from "@portaljs/remark-wiki-link";
 
 // https://astro.build/config
 export default defineConfig({
@@ -39,7 +38,13 @@ export default defineConfig({
       remarkStringify,
       remarkCodeTitle,
       remarkMath,
-      // remarkObsidian,
+      [
+        remarkWikiLink,
+        {
+          pathFormat: "obsidian-short",
+          permalinks: getPermalinks("./src/posts"),
+        },
+      ],
     ],
     rehypePlugins: [rehypeKatex, rehypeStringify],
     remarkRehype: { allowDangerousHtml: true },
