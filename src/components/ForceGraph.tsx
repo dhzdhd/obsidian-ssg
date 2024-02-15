@@ -19,7 +19,7 @@ const ForceGraph = () => {
   );
   const [highlightNodes, setHighlightNodes] = useState(new Set());
   const [highlightLinks, setHighlightLinks] = useState(new Set());
-  const [hoverNode, setHoverNode] = useState(null);
+
   useEffect(() => {
     setData(() => {
       return {
@@ -37,11 +37,6 @@ const ForceGraph = () => {
       };
     });
   }, []);
-
-  const updateHighlight = () => {
-    setHighlightNodes(highlightNodes);
-    setHighlightLinks(highlightLinks);
-  };
 
   return (
     <>
@@ -73,58 +68,68 @@ const ForceGraph = () => {
               ctx.lineTo(link.target.x, link.target.y);
               ctx.stroke();
             }}
-            linkWidth={(link) =>
-              highlightLinks.has(link) ? link.lineWidth * 2 : link.lineWidth
-            }
+            linkWidth={(link) => (highlightLinks.has(link) ? 5 : 1)}
             onLinkHover={(link) => {
-              highlightNodes.clear();
-              highlightLinks.clear();
+              let newLinks = new Set();
+              let newNodes = new Set();
 
               if (link) {
-                highlightLinks.add(link);
-                highlightNodes.add(link.source);
-                highlightNodes.add(link.target);
+                newLinks = newLinks.add(link);
+                newNodes = newNodes.add(link.source).add(link.target);
               }
 
-              updateHighlight();
+              setHighlightNodes(newNodes);
+              setHighlightLinks(newLinks);
+            }}
+            onBackgroundClick={(event) => {
+              setHighlightLinks(new Set());
+              setHighlightNodes(new Set());
             }}
             onNodeHover={(node) => {
-              highlightNodes.clear();
-              highlightLinks.clear();
-              if (node) {
-                highlightNodes.add(node);
-                node.neighbors.forEach((neighbor) =>
-                  highlightNodes.add(neighbor)
-                );
-                node.links.forEach((link) => highlightLinks.add(link));
-              }
+              let newNodes = new Set();
+              let newLinks = new Set();
 
-              setHoverNode(node || null);
-              updateHighlight();
+              if (node) {
+                newNodes = newNodes.add(node);
+
+                if (node.neighbors) {
+                  node.neighbors.forEach(
+                    (neighbor) => (newNodes = newNodes.add(neighbor))
+                  );
+                }
+                if (node.links) {
+                  node.links.forEach((link) => (newLinks = newLinks.add(link)));
+                }
+              }
+              setHighlightLinks(newLinks);
+              setHighlightNodes(newNodes);
             }}
             nodeCanvasObject={(node, ctx, globalScale) => {
+              if (highlightNodes.has(node)) {
+                ctx.fillStyle = node.color;
+              } else {
+                ctx.fillStyle = "rgb(100, 100, 100)";
+              }
+
+              ctx.beginPath();
+              ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
+              ctx.fill();
+
               const label = String(node.id);
-              const fontSize = 12 / globalScale;
+              const fontSize = highlightNodes.has(node)
+                ? 20 / globalScale
+                : 12 / globalScale;
               ctx.font = `${fontSize}px Sans-Serif`;
               const textWidth = ctx.measureText(label).width;
               const bckgDimensions = [textWidth, fontSize].map(
                 (n) => n + fontSize * 0.2
               );
-
-              ctx.fillStyle = "rgba(0, 0, 0, 0.0)";
-              ctx.fillRect(
-                node.x - bckgDimensions[0] / 2,
-                node.y - bckgDimensions[1] / 2,
-                bckgDimensions[0],
-                bckgDimensions[1]
-              );
+              node.__bckgDimensions = bckgDimensions;
 
               ctx.textAlign = "center";
               ctx.textBaseline = "middle";
               ctx.fillStyle = node.color;
-              ctx.fillText(label, node.x, node.y);
-
-              node.__bckgDimensions = bckgDimensions;
+              ctx.fillText(label, node.x, node.y + 10);
             }}
             nodePointerAreaPaint={(node, color, ctx) => {
               ctx.fillStyle = color;
