@@ -1,18 +1,34 @@
 <script lang="ts">
   import type { MarkDownHeading } from "astro";
   import { PanelRight } from "lucide-svelte";
+  import { onMount } from "svelte";
   import { fly } from "svelte/transition";
 
   export let data: MarkDownHeading;
-  let innerWidth;
   let visible = false;
 
-  $: visible = innerWidth > 1024 ? true : false;
+  let innerWidth;
+  let prevWidth = innerWidth;
+
+  const changeWidth = (_event) => {
+    if (prevWidth <= 1024 && innerWidth > 1024) {
+      visible = true;
+    } else if (prevWidth > 1024 && innerWidth <= 1024) {
+      visible = false;
+    }
+    prevWidth = innerWidth;
+  };
+
+  onMount(() => {
+    if (innerWidth > 1024) {
+      visible = true;
+    }
+  });
 </script>
 
 <!-- TODO: Move TOC to vanilla Astro -->
 
-<svelte:window bind:innerWidth />
+<svelte:window bind:innerWidth on:resize={changeWidth} />
 
 {#if visible}
   <aside

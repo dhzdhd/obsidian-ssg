@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/dhzdhd/obsidian-ssg/blob/master/config.schema.json",
+  "title": "Configuration",
+  "description": "Configuration schema for obsidian-ssg",
+  "type": "object",
+  "properties": {
+    "redirects": {
+      "description": "Website redirects that are fed to Astro",
+      "type": "object"
+    }
+  }
+}
