@@ -44,6 +44,7 @@ export default defineConfig({
           pathFormat: "obsidian-short",
           permalinks: getPermalinks("./src/posts"),
           hrefTemplate: (permalink) => {
+            console.log(permalink.split("src/posts").pop());
             return permalink.split("src/posts").pop();
           },
         },

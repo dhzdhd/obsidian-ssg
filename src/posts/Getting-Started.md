@@ -239,11 +239,11 @@ unsigned int indices[] = {  // Note that we start from 0!
 ### Summary
 
 - A breakdown on all the functions called for buffer management -
-	- **`glGenVertexArrays`:** Creates a new VAO object and stores an ID for it.
-	- **`glBindVertexArray`:** Binds the VAO with the given ID, making it the active VAO.
-	- **`glGenBuffers`:** Creates a new VBO object and stores an ID for it.
-	- **`glBindBuffer`:** Binds the VBO with the given ID to the specified buffer type.
-	- **`glBufferData`:** Copies the provided data (vertices in this case) into the currently bound VBO.
-	- **`glVertexAttribPointer`:** Associates the currently bound VBO with a specific vertex attribute index and specifies how to interpret its data.
-	- **`glEnableVertexAttribArray`:** Enables the specified vertex attribute index so that it will be used by the shaders. it **retrieves the currently bound VBO from the global state** and stores the association of that VBO with the specified vertex attribute index in the VAO's state. **This is how the VAO knows which VBO to use and how to interpret its data.**
+	- **`glGenVertexArrays`:**Creates a new VAO object and stores an ID for it.
+	- **`glBindVertexArray`:**Binds the VAO with the given ID,making it the active VAO.
+	- **`glGenBuffers`:**Creates a new VBO object and stores an ID for it.
+	- **`glBindBuffer`:**Binds the VBO with the given ID to the specified buffer type.
+	- **`glBufferData`:**Copies the provided data (vertices in this case) into the currently bound VBO.
+	- **`glVertexAttribPointer`:**Associates the currently bound VBO with a specific vertex attribute index and specifies how to interpret its data.
+	- **`glEnableVertexAttribArray`:**Enables the specified vertex attribute index so that it will be used by the shaders. it **retrieves the currently bound VBO from the global state** and stores the association of that VBO with the specified vertex attribute index in the VAO's state. **This is how the VAO knows which VBO to use and how to interpret its data.**
 - In summary, the VAO holds pointers to VBOs and information about how to interpret their data, but it doesn't store the actual data itself. This separation allows you to use multiple VAOs with the same VBO or multiple VBOs with the same VAO, depending on your needs.
