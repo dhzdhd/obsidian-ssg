@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import Layout from "../layouts/Layout.astro";
 import TOC from "@components/TOC.svelte";
 import PageLink from "@components/PageLink.astro";
+import BreadcrumbNav from "@components/BreadcrumbNav.astro";
 
 const getSlug = (post: MarkdownInstance<Record<string, any>>): string => {
   const path = post.file.split("src/posts/")[1];
@@ -47,10 +48,15 @@ const next =
     ? undefined
     : getSlug(posts[indexOfCurrent + 1]);
 const headings = post.getHeadings().filter((val) => val.depth != 1);
+
+const urlSegments = decodeURI(
+  Astro.url.toString().replace(Astro.url.origin, "").slice(1)
+).split("/");
 ---
 
 <Layout title="Hello">
   <TOC client:visible data={headings} />
+  <BreadcrumbNav urlSegments={urlSegments} />
   <article
     class="py-5 md:px-5 prose prose-base dark:prose-invert max-w-none overflow-x-auto"
   >
