@@ -6,9 +6,14 @@
 
   export let data: MarkDownHeading;
   let visible = false;
+  let currentItem = undefined;
 
   let innerWidth;
   let prevWidth = innerWidth;
+
+  const setItem = (item: any) => {
+    currentItem = item;
+  };
 
   const changeWidth = (_event) => {
     if (prevWidth <= 1024 && innerWidth > 1024) {
@@ -41,10 +46,14 @@
         {#each data as item}
           <li
             style={`padding-left: ${(item.depth - 2) * 1.2 + 0.5}rem`}
-            class="hover:bg-secondary dark:focus:bg-primary-foreground dark:hover:bg-primary-foreground w-full"
+            class={`${
+              currentItem == item && "bg-secondary"
+            } hover:bg-secondary dark:focus:bg-primary-foreground dark:hover:bg-primary-foreground w-full rounded-lg`}
           >
-            <a class="w-full inline-flex py-1" href={`#${item.slug}`}
-              >{item.text}</a
+            <a
+              class="w-full inline-flex py-1"
+              href={`#${item.slug}`}
+              on:click={() => setItem(item)}>{item.text}</a
             >
           </li>
         {/each}

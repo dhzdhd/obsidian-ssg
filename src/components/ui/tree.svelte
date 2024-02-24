@@ -34,7 +34,9 @@
 
   <li class={level !== 1 ? "pl-4" : ""}>
     <button
-      class="flex items-center gap-1 px-2 w-full rounded-md my-1 min-h-10 text-start hover:bg-secondary dark:hover:bg-primary-foreground focus:bg-secondary dark:focus:bg-primary-foreground"
+      class={`${
+        $isSelected(itemId) && "bg-primary-foreground"
+      } flex items-center gap-1 px-2 w-full rounded-md my-1 min-h-10 text-start hover:bg-secondary dark:hover:bg-primary-foreground focus:bg-secondary dark:focus:bg-primary-foreground`}
       use:melt={$item({
         id: itemId,
         hasChildren,
@@ -72,7 +74,6 @@
 {/each}
 
 <style>
-  /* Remove docs' focus box-shadow styling. */
   li:focus {
     box-shadow: none !important;
   }
