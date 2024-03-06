@@ -50,7 +50,7 @@ const next =
 const headings = post.getHeadings().filter((val) => val.depth != 1);
 
 const urlSegments = decodeURI(
-  Astro.url.toString().replace(Astro.url.origin, "").slice(1)
+  Astro.url.toString().replace(Astro.url.origin, "").trim().slice(1)
 ).split("/");
 ---
 

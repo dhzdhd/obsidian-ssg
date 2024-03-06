@@ -13,13 +13,13 @@ import { ChevronLeft, ChevronRight } from "lucide-svelte";
   style={direction == "left"
     ? "border-radius: var(--radius) 0 0 var(--radius)"
     : "border-radius: 0 var(--radius) var(--radius) 0"}
-  class="grid gap-2 w-full grid-cols-2 border hover:border-black dark:hover:border-white text-center"
+  class="flex flex-row gap-2 w-full border hover:border-black dark:hover:border-white text-center"
 >
   {
     direction == "left" && (
       <>
-        <ChevronLeft class="ml-3 place-self-start self-center " />
-        <span class="pr-5 flex-grow align-middle place-self-end self-center">
+        <ChevronLeft class="ml-2 min-w-5 w-5 self-center " />
+        <span class="pr-3 py-1 flex-grow align-middle self-center text-end line-clamp-2">
           {name}
         </span>
       </>
@@ -29,10 +29,10 @@ import { ChevronLeft, ChevronRight } from "lucide-svelte";
   {
     direction == "right" && (
       <>
-        <span class="pl-5 flex-grow align-middle place-self-start self-center">
+        <span class="pl-3 py-1 flex-grow align-middle self-center text-start line-clamp-2">
           {name}
         </span>
-        <ChevronRight class="mr-3 place-self-end  self-center" />
+        <ChevronRight class="mr-2 min-w-5 w-5 self-center" />
       </>
     )
   }

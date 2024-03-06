@@ -36,5 +36,6 @@
 {/if}
 <button
   on:click={() => (visible = !visible)}
-  class="z-20 fixed bottom-2 left-2 opacity-70"><PanelLeft /></button
+  class="z-20 fixed bottom-2 left-2 opacity-45 hover:opacity-100"
+  ><PanelLeft /></button
 >

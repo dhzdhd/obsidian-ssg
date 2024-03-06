@@ -8,11 +8,15 @@ import { ChevronRight } from "lucide-svelte";
 
 {
   urlSegments.length != 1 && (
-    <div class="pt-5 md:px-5 flex flex-row items-center text-muted-foreground">
+    <div class="pt-5 md:px-5 flex flex-row gap-2 items-center text-muted-foreground ">
       {urlSegments.map((item, index) => (
         <>
-          {index != 0 && <ChevronRight size={20} class="mx-2" />}
-          <span class={index == urlSegments.length - 1 ? "text-primary" : ""}>
+          {index != 0 && <ChevronRight size={20} class=" min-w-5" />}
+          <span
+            class={
+              index == urlSegments.length - 1 ? "text-primary line-clamp-2" : ""
+            }
+          >
             {item}
           </span>
         </>

@@ -73,4 +73,16 @@
   pre {
     @apply bg-secondary dark:bg-background border-[1px] !important;
   }
+
+  *::-webkit-scrollbar {
+    @apply w-2 h-2
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply bg-background
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply bg-secondary hover:bg-foreground
+  }
 }
