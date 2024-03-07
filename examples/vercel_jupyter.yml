@@ -1,0 +1,56 @@
+name: Build and Deploy Vercel
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+
+      - name: Checkout SSG
+        uses: actions/checkout@v4
+        with:
+          repository: dhzdhd/obsidian-ssg
+          path: ssg
+
+      - name: Cleanup SSG repository
+        run: |
+          rm -rf ./ssg/src/config
+          rm -rf ./ssg/src/posts/*
+          rm -rf ./ssg/public/*
+
+      - name: Move config files
+        run: mv ./.config ./ssg/src/config
+
+      - name: Install nbconvert
+        run: pip install nbconvert
+
+      - name: Convert all ipynb files to markdown (and delete ipynb files)
+        run: find <markdown_files_folder> -name '*.ipynb' -type f -execdir jupyter nbconvert --to markdown {} \; -execdir rm {} \;
+
+      - name: Move markdown and image files
+        run: rsync -avm --include='*.png' --include='*.jpg' --include='*.webp' --include='*.svg' --include='*.md' --include='*/' --exclude='*' "<markdown_files_folder>/" "./ssg/src/posts/"
+
+      - name: Copy images to public/
+        run: |
+          rsync -avm --include='*.png' --include='*.jpg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "./ssg/src/posts/" "./ssg/public"
+
+      - name: Convert relative links
+        run: |
+          python ./ssg/preprocess/relative_links.py ./ssg/src/posts/
+
+      - name: Deploy site
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: vercel
+          folder: ssg
