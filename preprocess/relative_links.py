@@ -16,7 +16,7 @@ def substitute(s: str) -> str:
         [link.startswith("(./"), link.startswith("(.\\"), link.startswith("(https://")]
     ):
         return re.sub(link_pattern, f"(./{link[1:-1]})", s[0])
-    return s[0]
+    return s[0].replace("%20", " ")
 
 
 for dir_path, _, file_paths in os.walk(md_folder):
