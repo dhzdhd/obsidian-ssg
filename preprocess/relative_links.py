@@ -15,7 +15,7 @@ def substitute(s: str) -> str:
     if not any(
         [link.startswith("(./"), link.startswith("(.\\"), link.startswith("(https://")]
     ):
-        return re.sub(link_pattern, f"(./{link[1:-1]})", s[0])
+        return re.sub(link_pattern, f"(./{link[1:-1]})", s[0]).replace("%20", " ")
     return s[0].replace("%20", " ")
 
 
