@@ -18,9 +18,14 @@
   import { melt, type TreeView } from "@melt-ui/svelte";
   import { getContext } from "svelte";
   import type { TreeItem } from "@/lib/types";
+  import type { Writable } from "svelte/store";
 
   export let treeItems: TreeItem[];
   export let level = 1;
+
+  let innerWidth;
+
+  const isVisible: Writable<boolean> = getContext("treevisible");
 
   const {
     elements: { item, group },
@@ -28,12 +33,19 @@
   } = getContext<TreeView>("tree");
 </script>
 
+<svelte:window bind:innerWidth />
+
 {#each treeItems as { title, icon, url, children }, i}
   {@const itemId = `${title}-${i}`}
   {@const hasChildren = !!children?.length}
 
   <li class={level !== 1 ? "pl-4" : ""}>
     <button
+      on:click={() => {
+        if (innerWidth < 1024 && !hasChildren) {
+          isVisible.set(false);
+        }
+      }}
       class={`${
         $isSelected(itemId) && "bg-primary-foreground"
       } flex items-center gap-1 px-2 w-full rounded-md my-1 min-h-10 text-start hover:bg-secondary dark:hover:bg-primary-foreground focus:bg-secondary dark:focus:bg-primary-foreground`}

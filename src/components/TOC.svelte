@@ -13,6 +13,10 @@
 
   const setItem = (item: any) => {
     currentItem = item;
+
+    if (innerWidth < 1024) {
+      visible = false;
+    }
   };
 
   const changeWidth = (_event) => {
