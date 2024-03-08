@@ -52,6 +52,7 @@ const headings = post.getHeadings().filter((val) => val.depth != 1);
 const urlSegments = decodeURI(
   Astro.url.toString().replace(Astro.url.origin, "").trim().slice(1)
 ).split("/");
+console.log(Astro.url.toString().replace(Astro.url.origin, "").trim());
 ---
 
 <Layout title="Hello">
