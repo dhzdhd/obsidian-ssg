@@ -49,10 +49,13 @@ const next =
     : getSlug(posts[indexOfCurrent + 1]);
 const headings = post.getHeadings().filter((val) => val.depth != 1);
 
-const urlSegments = decodeURI(
+let urlSegments = decodeURI(
   Astro.url.toString().replace(Astro.url.origin, "").trim().slice(1)
 ).split("/");
-console.log(Astro.url.toString().replace(Astro.url.origin, "").trim());
+
+if (urlSegments[urlSegments.length - 1] === "") {
+  urlSegments = urlSegments.slice(0, urlSegments.length - 1);
+}
 ---
 
 <Layout title="Hello">
