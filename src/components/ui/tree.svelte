@@ -48,7 +48,7 @@
       }}
       class={`${
         $isSelected(itemId) && "bg-primary-foreground"
-      } flex items-center gap-1 px-2 w-full rounded-md my-1 min-h-10 text-start hover:bg-secondary dark:hover:bg-primary-foreground focus:bg-secondary dark:focus:bg-primary-foreground`}
+      } flex items-center px-2 w-full my-1 py-1 rounded-md min-h-10 text-start hover:bg-secondary dark:hover:bg-primary-foreground focus:bg-secondary dark:focus:bg-primary-foreground`}
       use:melt={$item({
         id: itemId,
         hasChildren,
@@ -62,9 +62,11 @@
       {/if} -->
 
       {#if url}
-        <a href={url} class="select-none w-full py-1">{title}</a>
+        <a href={url} class="select-none w-full h-10 flex items-center"
+          >{title}</a
+        >
       {:else}
-        <span class="select-none w-full py-1">{title}</span>
+        <span class="select-none w-full h-10 flex items-center">{title}</span>
       {/if}
 
       <!-- Selected icon. -->

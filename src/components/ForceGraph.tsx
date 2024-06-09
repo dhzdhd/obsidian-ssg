@@ -10,7 +10,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import ForceGraph2D from "react-force-graph-2d";
+import { useStore } from "@nanostores/react";
+
 import type { GraphData } from "react-force-graph-2d";
+import { $linkStore } from "@/lib/stores";
 
 const ForceGraph = () => {
   const fgRef = useRef();
@@ -20,20 +23,42 @@ const ForceGraph = () => {
   const [highlightNodes, setHighlightNodes] = useState(new Set());
   const [highlightLinks, setHighlightLinks] = useState(new Set());
 
+  const rawLinks = useStore($linkStore);
+  console.log(rawLinks);
+
+  const links: { source: string; target: string }[] = [];
+  for (const rawLink of rawLinks) {
+    const doc = document.createElement("html");
+    doc.innerHTML = rawLink["content"];
+    const classes = doc.getElementsByClassName("internal");
+
+    for (const rawClass of classes) {
+      const href = rawClass.getAttribute("href");
+      if (href) {
+        links.push({
+          source: rawLink["url"].split("src/posts")[1].replace(".md", ""), // TODO: Improve
+          target: href,
+        });
+      }
+    }
+  }
+  console.log(links);
+
+  const nodes = [
+    ...new Set(links.flatMap((val) => [val.source, val.target])),
+  ].map((val) => {
+    return {
+      id: val,
+      group: 1,
+    };
+  });
+  console.log(nodes);
+
   useEffect(() => {
     setData(() => {
       return {
-        nodes: [
-          { id: "Myriel", group: 1 },
-          { id: "Napoleon", group: 1 },
-          { id: "Mlle.Baptistine", group: 1 },
-          { id: "Mme.Magloire", group: 1 },
-        ],
-        links: [
-          { source: "Napoleon", target: "Myriel", value: 1 },
-          { source: "Mlle.Baptistine", target: "Myriel", value: 8 },
-          { source: "Mme.Magloire", target: "Myriel", value: 10 },
-        ],
+        nodes: nodes,
+        links: links,
       };
     });
   }, []);
@@ -51,6 +76,7 @@ const ForceGraph = () => {
           <DialogHeader>
             <DialogTitle>Graph view</DialogTitle>
           </DialogHeader>
+          {/* TODO: Add link/button to goto target url */}
           <ForceGraph2D
             ref={fgRef}
             graphData={data}

@@ -19,6 +19,11 @@
     }
   };
 
+  const toggleVisibility = () => {
+    visible = !visible;
+    localStorage.setItem("tocvisibility", JSON.stringify(visible));
+  };
+
   const changeWidth = (_event) => {
     if (prevWidth <= 1024 && innerWidth > 1024) {
       visible = true;
@@ -29,7 +34,9 @@
   };
 
   onMount(() => {
-    if (innerWidth > 1024) {
+    const isStoredVisible = JSON.parse(localStorage.getItem("tocvisibility"));
+
+    if (isStoredVisible && innerWidth > 1024) {
       visible = true;
     }
   });
@@ -66,7 +73,7 @@
   </aside>
 {/if}
 <button
-  on:click={() => (visible = !visible)}
+  on:click={toggleVisibility}
   class="z-20 fixed bottom-2 right-2 opacity-45 hover:opacity-100"
   ><PanelRight /></button
 >
