@@ -20,7 +20,7 @@ jobs:
       - name: Checkout main repo
         uses: actions/checkout@v4
 
-      - name: Checkout SSG
+      - name: Checkout SSG repo
         uses: actions/checkout@v4
         with:
           repository: dhzdhd/obsidian-ssg
