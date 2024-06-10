@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import ForceGraph2D from "react-force-graph-2d";
 import { useStore } from "@nanostores/react";
-
+import { navigate } from "astro:transitions/client";
 import type { GraphData } from "react-force-graph-2d";
 import { $linkStore } from "@/lib/stores";
 
@@ -24,7 +24,6 @@ const ForceGraph = () => {
   const [highlightLinks, setHighlightLinks] = useState(new Set());
 
   const rawLinks = useStore($linkStore);
-  console.log(rawLinks);
 
   const links: { source: string; target: string }[] = [];
   for (const rawLink of rawLinks) {
@@ -42,17 +41,20 @@ const ForceGraph = () => {
       }
     }
   }
-  console.log(links);
 
   const nodes = [
     ...new Set(links.flatMap((val) => [val.source, val.target])),
   ].map((val) => {
+    const urlSegments = val.split("/");
+    const name = urlSegments[urlSegments.length - 1];
+
     return {
       id: val,
+      name: name,
+      url: `${window.location.origin}${val}`,
       group: 1,
     };
   });
-  console.log(nodes);
 
   useEffect(() => {
     setData(() => {
@@ -76,7 +78,6 @@ const ForceGraph = () => {
           <DialogHeader>
             <DialogTitle>Graph view</DialogTitle>
           </DialogHeader>
-          {/* TODO: Add link/button to goto target url */}
           <ForceGraph2D
             ref={fgRef}
             graphData={data}
@@ -89,12 +90,12 @@ const ForceGraph = () => {
               ctx.beginPath();
 
               ctx.strokeStyle = highlightLinks.has(link) ? "white" : "grey";
-              ctx.lineWidth = 1 / globalScale;
+              ctx.lineWidth = 2 / globalScale;
               ctx.moveTo(link.source.x, link.source.y);
               ctx.lineTo(link.target.x, link.target.y);
               ctx.stroke();
             }}
-            linkWidth={(link) => (highlightLinks.has(link) ? 5 : 1)}
+            linkWidth={(link) => (highlightLinks.has(link) ? 5 : 2)}
             onLinkHover={(link) => {
               let newLinks = new Set();
               let newNodes = new Set();
@@ -130,6 +131,10 @@ const ForceGraph = () => {
               setHighlightLinks(newLinks);
               setHighlightNodes(newNodes);
             }}
+            onNodeClick={(node: any, event: MouseEvent) => {
+              const href = node.url;
+              navigate(href);
+            }}
             nodeCanvasObject={(node, ctx, globalScale) => {
               if (highlightNodes.has(node)) {
                 ctx.fillStyle = node.color;
@@ -141,7 +146,7 @@ const ForceGraph = () => {
               ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
               ctx.fill();
 
-              const label = String(node.id);
+              const label = String(node.name);
               const fontSize = highlightNodes.has(node)
                 ? 20 / globalScale
                 : 12 / globalScale;
