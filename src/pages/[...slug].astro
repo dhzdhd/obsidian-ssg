@@ -61,22 +61,24 @@ if (urlSegments[urlSegments.length - 1] === "") {
 
 <Layout title="Hello">
   <TOC client:visible data={headings} />
-  <BreadcrumbNav urlSegments={urlSegments} />
-  <article
-    class="py-5 md:px-5 prose prose-base dark:prose-invert max-w-none overflow-x-auto"
-  >
-    <Content />
-  </article>
-  <div class="md:px-5 pb-6 flex flex-row min-h-20 justify-between">
-    {
-      prev && (
-        <PageLink name={getName(prev)} link={`/${prev}`} direction="left" />
-      )
-    }
-    {
-      next && (
-        <PageLink name={getName(next)} link={`/${next}`} direction="right" />
-      )
-    }
+  <div class="w-full max-w-screen-lg">
+    <BreadcrumbNav urlSegments={urlSegments} />
+    <article
+      class="py-5 md:px-5 prose prose-base dark:prose-invert max-w-none overflow-x-auto"
+    >
+      <Content />
+    </article>
+    <div class="md:px-5 pb-6 flex flex-row min-h-20 justify-between">
+      {
+        prev && (
+          <PageLink name={getName(prev)} link={`/${prev}`} direction="left" />
+        )
+      }
+      {
+        next && (
+          <PageLink name={getName(next)} link={`/${next}`} direction="right" />
+        )
+      }
+    </div>
   </div>
 </Layout>
