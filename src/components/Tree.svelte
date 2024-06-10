@@ -21,8 +21,8 @@
   let innerWidth;
 
   let visible = writable(false);
-  setContext("treevisible", visible);
-  $: visible.set(innerWidth > 1024);
+
+  $: $visible = innerWidth > 1650;
 </script>
 
 <svelte:window bind:innerWidth />

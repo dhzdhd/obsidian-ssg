@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { MarkDownHeading } from "astro";
+  import type { MarkdownHeading } from "astro";
   import { PanelRight } from "lucide-svelte";
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
 
-  export let data: MarkDownHeading;
+  export let data: MarkdownHeading[];
   let visible = false;
   let currentItem = undefined;
 
@@ -25,9 +25,10 @@
   };
 
   const changeWidth = (_event) => {
-    if (prevWidth <= 1024 && innerWidth > 1024) {
+    const isStoredVisible = JSON.parse(localStorage.getItem("tocvisibility"));
+    if (prevWidth < 1650 && innerWidth >= 1650) {
       visible = true;
-    } else if (prevWidth > 1024 && innerWidth <= 1024) {
+    } else if (prevWidth > 1650 && innerWidth <= 1650 && !isStoredVisible) {
       visible = false;
     }
     prevWidth = innerWidth;
