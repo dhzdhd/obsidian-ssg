@@ -14,6 +14,9 @@ interface Props {
 const { title } = Astro.props;
 
 const posts = await Astro.glob("../posts/**/*.md");
+const compiledPosts = posts.map((val) => {
+  return { url: val.file, content: val.compiledContent() };
+});
 
 let result: TreeItem[] = [];
 let level = { result };
@@ -71,6 +74,26 @@ const searchHeadings: SearchHeading[] = posts.flatMap((post) => {
   });
 });
 ---
+
+<script>
+  import { $linkStore } from "@/lib/stores";
+  let posts: string;
+
+  class Posts extends HTMLElement {
+    constructor() {
+      super();
+
+      posts = this.dataset.posts;
+    }
+  }
+
+  customElements.define("astro-posts", Posts);
+  $linkStore.set(JSON.parse(posts));
+</script>
+
+<astro-posts data-posts={JSON.stringify(compiledPosts)}>
+  <div id="#posts"></div>
+</astro-posts>
 
 <script is:inline>
   function setDarkMode(document) {

@@ -35,9 +35,6 @@ export const getStaticPaths: GetStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const posts = await Astro.glob("../posts/**/*.md");
-const compiledPosts = posts.map((val) => {
-  return { url: val.file, content: val.compiledContent() };
-});
 
 const { Content } = Astro.props.post as { Content: any };
 
@@ -61,36 +58,6 @@ if (urlSegments[urlSegments.length - 1] === "") {
   urlSegments = urlSegments.slice(0, urlSegments.length - 1);
 }
 ---
-
-<script>
-  import { $linkStore } from "@/lib/stores";
-  let posts: string;
-
-  class Posts extends HTMLElement {
-    constructor() {
-      super();
-
-      posts = this.dataset.posts;
-    }
-  }
-
-  customElements.define("astro-posts", Posts);
-  // console.log(JSON.parse(posts));
-
-  $linkStore.set(JSON.parse(posts));
-
-  // var doc = document.createElement("html");
-  // doc.innerHTML = posts[0][1];
-  // var links = doc.getElementsByClassName("internal");
-
-  // for (var i = 0; i < links.length; i++) {
-  //   urls.push(links[i].getAttribute("href"));
-  // }
-</script>
-
-<astro-posts data-posts={JSON.stringify(compiledPosts)}>
-  <div id="#posts"></div>
-</astro-posts>
 
 <Layout title="Hello">
   <TOC client:visible data={headings} />
