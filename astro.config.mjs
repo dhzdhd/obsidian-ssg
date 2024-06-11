@@ -1,10 +1,7 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
-import config from "./src/config/config.ts";
-
 import svelte from "@astrojs/svelte";
-
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeStringify from "rehype-stringify";
@@ -12,6 +9,13 @@ import remarkCodeTitle from "remark-code-title";
 import remarkParse from "remark-parse";
 import remarkStringify from "remark-stringify";
 import { remarkWikiLink, getPermalinks } from "@portaljs/remark-wiki-link";
+import yaml from "@rollup/plugin-yaml";
+
+import config from "./src/config/config.ts";
+// import config from "ssg.config.mjs
+// FIXME: Read from node fs
+
+console.log(config);
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,6 +26,9 @@ export default defineConfig({
     }),
     svelte(),
   ],
+  vite: {
+    plugins: [yaml()],
+  },
   prefetch: {
     prefetchAll: true,
     defaultStrategy: "load",
@@ -51,6 +58,8 @@ export default defineConfig({
       ],
     ],
     rehypePlugins: [rehypeKatex, rehypeStringify],
-    remarkRehype: { allowDangerousHtml: true },
+    remarkRehype: {
+      allowDangerousHtml: true,
+    },
   },
 });

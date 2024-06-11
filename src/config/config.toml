@@ -1,0 +1,11 @@
+[redirects]
+'/' = '/home'
+
+[[metadata]]
+title = ''
+description = ''
+logo = ''
+
+[[links]]
+github = ''
+twitter = ''

@@ -6,9 +6,10 @@
 
 ## Setup
 
-1. Create a `.config` folder in your preferred folder with the following files in it (refer to `examples/`)
-    - `config.ts` - The configuration file for the SSG
+1. Create a `.config` folder in your preferred folder with the following files in it (refer to `examples/`) (files enclosed in `[]` are optional)
+    - `config.yaml` - The configuration file for the website
     - `index.md` - The landing page
+    - `[globals.css]` - The css file with which you can customize the looks of the website
 2. Create a `.github/workflows` folder in the same folder and place your preferred `.yml` file from `examples/` in it
     - `vercel.yml` - Change `<markdown_files_folder>` on line 36 to your `.md` files directory
 3. Push changes to your remote repository
