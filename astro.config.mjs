@@ -11,9 +11,9 @@ import remarkStringify from "remark-stringify";
 import { remarkWikiLink, getPermalinks } from "@portaljs/remark-wiki-link";
 import yaml from "@rollup/plugin-yaml";
 
-import config from "./src/config/config.ts";
-// import config from "ssg.config.mjs
-// FIXME: Read from node fs
+import config from "./src/config/config.json";
+// FIXME: To use YAML, consider dynamic redirects
+// https://docs.astro.build/en/guides/routing/#dynamic-redirects
 
 console.log(config);
 
@@ -38,7 +38,7 @@ export default defineConfig({
     gfm: true,
     syntaxHighlight: "shiki",
     shikiConfig: {
-      theme: "one-dark-pro",
+      theme: config.codeTheme ?? "one-dark-pro",
     },
     remarkPlugins: [
       remarkParse,
@@ -51,7 +51,6 @@ export default defineConfig({
           pathFormat: "obsidian-short",
           permalinks: getPermalinks("./src/posts"),
           hrefTemplate: (permalink) => {
-            console.log(permalink.split("src/posts").pop());
             return permalink.split("src/posts").pop();
           },
         },

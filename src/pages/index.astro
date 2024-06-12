@@ -15,10 +15,12 @@ try {
 ---
 
 <Layout title="Hello">
-  <article
-    class="p-5 prose prose-base dark:prose-invert max-w-none overflow-x-auto"
-  >
-    <!-- TODO: Improve default index html -->
-    {isIndexExists ? <Content /> : <h1>Hello World</h1>}
-  </article>
+  <div class="w-full max-w-screen-lg">
+    <article
+      class="p-5 prose prose-base dark:prose-invert max-w-none overflow-x-auto"
+    >
+      <!-- TODO: Improve default index html -->
+      {isIndexExists ? <Content /> : <h1>Hello World</h1>}
+    </article>
+  </div>
 </Layout>
