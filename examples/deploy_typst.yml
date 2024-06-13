@@ -1,0 +1,63 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  MD_FOLDER: .
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+
+      - name: Checkout SSG repo
+        uses: actions/checkout@v4
+        with:
+          repository: dhzdhd/obsidian-ssg
+          path: ssg
+
+      - name: Cleanup SSG repository
+        run: |
+          find ssg -type f -name "*.md" -exec rm -f {} +
+
+      - name: Move config files
+        run: mv ./.config ./ssg/src/config
+
+      - name: Install pandoc
+        uses: pandoc/actions/setup@{main}
+        with:
+          version: 2.19
+
+      - name: Convert all typst files to markdown (and delete typst files)
+        run: find ${{ env.MD_FOLDER }} -iname "*.typ" -type f -exec sh -c 'pandoc "${0}" -o "./output/$(basename ${0%.typ}.md)"' {} \; -execdir rm {} \;
+
+      - name: Debug tree
+        run: tree .
+
+      - name: Move markdown files
+        run: |
+          rsync -avm --include='*.md' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}" "./ssg/src/posts/"
+
+      - name: Copy images to public/
+        run: |
+          rsync -avm --include='*.png' --include='*.jpg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}" "./ssg/public"
+
+      - name: Convert relative links
+        run: |
+          python ./ssg/preprocess/relative_links.py ./ssg/src/posts/
+
+      - name: Push updated files to deploy branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: deploy
+          folder: ssg
