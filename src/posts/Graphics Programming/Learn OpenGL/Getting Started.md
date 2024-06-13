@@ -10,7 +10,7 @@
 
 ### Core v/s Immediate mode
 
-- Original spec was focused on immediate mode a.k.a an easy-to-use API that was abstracted away from the inner workings of the functionalities. 
+- Original spec was focused on immediate mode a.k.a an easy-to-use API that was abstracted away from the inner workings of the functionalities.
 - From 3.2 onwards, to improve customisability and flexibility, OpenGL switched to a core-profile mode that forces us to use modern practices.
 - >3.3 versions exist but all future versions of OpenGL starting from 3.3 add extra useful features to OpenGL without changing OpenGL's core mechanics.
 
@@ -28,8 +28,8 @@ if(GL_ARB_extension_name) {
 
 ### State machine
 
-- OpenGL is by itself a large state machine: a collection of variables that define how OpenGL should currently operate. 
-- The state of OpenGL is commonly referred to as the OpenGL context. 
+- OpenGL is by itself a large state machine: a collection of variables that define how OpenGL should currently operate.
+- The state of OpenGL is commonly referred to as the OpenGL context.
 - When using OpenGL, we often change its state by setting some options, manipulating some buffers and then render using the current context.
 - When working in OpenGL we will come across several state-changing functions that change the context and several state-using functions that perform some operations based on the current state of OpenGL.
 
@@ -38,7 +38,8 @@ if(GL_ARB_extension_name) {
 - OpenGL libraries are written in C
 - Due to translation problems, OpenGL has the object abstraction.
 - An object in OpenGL is a collection of options that represents a subset of OpenGL's state.
-```c
+
+```c title="main.c"
 struct object_name {
     float  option1;
     int    option2;
@@ -48,7 +49,7 @@ struct object_name {
 struct OpenGL_Context {  // Using obj in the context
   	...
   	object_name* object_Window_Target;
-  	...  	
+  	...
 };
 
 // Create object
@@ -86,7 +87,7 @@ glBindObject(GL_WINDOW_TARGET, 0);
 
 ### Hello Window
 
-- We initialize GLFW with `glfwInit` and then configure it with `glfwWindowHint` which takes a window hint which is a enum prefixed by `GLFW_` and a value. 
+- We initialize GLFW with `glfwInit` and then configure it with `glfwWindowHint` which takes a window hint which is a enum prefixed by `GLFW_` and a value.
 - Create a window with `glfwCreateWindow` and use `glfwMakeContextCurrent` to make the context of our window the main context on the current thread. (one ctx per thread)
 - We initialize GLAD before calling OpenGL functions
 - Set the viewport for rendering which can be smaller than the main window by `glViewport`
@@ -127,13 +128,13 @@ glBindObject(GL_WINDOW_TARGET, 0);
 ### Vertex input
 
 - OpenGL does not transform all 3D coords to 2D pixels but only processes those that are in a specific range of -1 to 1 on all axes which are the **normalized device coordinates**
-- For a triangle - 
+- For a triangle -
 ```c++
 float vertices[] = {
     -0.5f, -0.5f, 0.0f,
      0.5f, -0.5f, 0.0f,
      0.0f,  0.5f, 0.0f
-};  
+};
 ```
 - Unlike screen coords, y axis point up and (0, 0) is in the center of the graph.
 - The normalized coords are transformed to screen-space coordinates via the viewport transform.
@@ -205,7 +206,7 @@ void main()
 	- Calls to `glEnableVertexAttribArray` or the disable counterpart
 	- Vertex attr configs
 	- VBO's associated with attributes
-- Usually when you have multiple objects you want to draw, you first generate/configure all the VAOs (and thus the required VBO and attribute pointers) and store those for later use. 
+- Usually when you have multiple objects you want to draw, you first generate/configure all the VAOs (and thus the required VBO and attribute pointers) and store those for later use.
 - The moment we want to draw one of our objects, we take the corresponding VAO, bind it, then draw the object and unbind the VAO again.
 
 ### Drawing
@@ -220,15 +221,15 @@ void main()
 ```c
 // Specify rect vertices instead of 2 triangles
 float vertices[] = {
-     0.5f,  0.5f, 0.0f, 
-     0.5f, -0.5f, 0.0f,  
-    -0.5f, -0.5f, 0.0f,  
-    -0.5f,  0.5f, 0.0f  
+     0.5f,  0.5f, 0.0f,
+     0.5f, -0.5f, 0.0f,
+    -0.5f, -0.5f, 0.0f,
+    -0.5f,  0.5f, 0.0f
 };
 unsigned int indices[] = {  // Note that we start from 0!
     0, 1, 3,   // First triangle
     1, 2, 3    // Second triangle
-};  
+};
 ```
 - Add a EBO after VBO, with buffer type - `GL_ELEMENT_ARRAY_BUFFER`
 - Instead of `glDrawArrays`, EBO uses `glDrawElements`
@@ -239,11 +240,11 @@ unsigned int indices[] = {  // Note that we start from 0!
 ### Summary
 
 - A breakdown on all the functions called for buffer management -
-	- **`glGenVertexArrays`:** Creates a new VAO object and stores an ID for it.
-	- **`glBindVertexArray`:** Binds the VAO with the given ID, making it the active VAO.
-	- **`glGenBuffers`:** Creates a new VBO object and stores an ID for it.
-	- **`glBindBuffer`:** Binds the VBO with the given ID to the specified buffer type.
-	- **`glBufferData`:** Copies the provided data (vertices in this case) into the currently bound VBO.
-	- **`glVertexAttribPointer`:** Associates the currently bound VBO with a specific vertex attribute index and specifies how to interpret its data.
-	- **`glEnableVertexAttribArray`:** Enables the specified vertex attribute index so that it will be used by the shaders. it **retrieves the currently bound VBO from the global state** and stores the association of that VBO with the specified vertex attribute index in the VAO's state. **This is how the VAO knows which VBO to use and how to interpret its data.**
+	- **`glGenVertexArrays`:** Creates a new VAO object and stores an ID for it.
+	- **`glBindVertexArray`:** Binds the VAO with the given ID, making it the active VAO.
+	- **`glGenBuffers`:** Creates a new VBO object and stores an ID for it.
+	- **`glBindBuffer`:** Binds the VBO with the given ID to the specified buffer type.
+	- **`glBufferData`:** Copies the provided data (vertices in this case) into the currently bound VBO.
+	- **`glVertexAttribPointer`:** Associates the currently bound VBO with a specific vertex attribute index and specifies how to interpret its data.
+	- **`glEnableVertexAttribArray`:** Enables the specified vertex attribute index so that it will be used by the shaders. it **retrieves the currently bound VBO from the global state** and stores the association of that VBO with the specified vertex attribute index in the VAO's state. **This is how the VAO knows which VBO to use and how to interpret its data.**
 - In summary, the VAO holds pointers to VBOs and information about how to interpret their data, but it doesn't store the actual data itself. This separation allows you to use multiple VAOs with the same VBO or multiple VBOs with the same VAO, depending on your needs.

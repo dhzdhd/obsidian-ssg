@@ -12,10 +12,7 @@ import { remarkWikiLink, getPermalinks } from "@portaljs/remark-wiki-link";
 import yaml from "@rollup/plugin-yaml";
 
 import config from "./src/config/config.json";
-// FIXME: To use YAML, consider dynamic redirects
-// https://docs.astro.build/en/guides/routing/#dynamic-redirects
-
-console.log(config);
+// FIXME: To use TOML, wait for PR to be merged
 
 // https://astro.build/config
 export default defineConfig({

@@ -74,6 +74,14 @@
     @apply bg-secondary dark:bg-background border-[1px] !important;
   }
 
+  [data-remark-code-title]+pre {
+    @apply mt-0 rounded-t-none;
+  }
+
+  [data-remark-code-title] {
+    @apply bg-accent px-4 font-bold p-0 m-0 rounded-t-lg
+  }
+
   *::-webkit-scrollbar {
     @apply w-2 h-2
   }

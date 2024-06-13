@@ -1,4 +1,4 @@
-name: Build and Deploy Vercel
+name: Build and Deploy
 
 on:
   push:
@@ -45,8 +45,8 @@ jobs:
         run: |
           python ./ssg/preprocess/relative_links.py ./ssg/src/posts/
 
-      - name: Push updated files to vercel branch
+      - name: Push updated files to deploy branch
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: vercel
+          branch: deploy
           folder: ssg

@@ -13,6 +13,7 @@
 ## Prerequisites
 
 - Your Obsidian vault should be configured with git
+- The vault repository should be pushed to Github
 
 ## Setup
 
@@ -24,6 +25,8 @@
     - `deploy_normal.yml` - Change the value of `MD_FOLDER` on line 9 to your `.md` files directory (leave it as `.` if all the files are in your project root directory)
 3. Push changes to your remote repository
 4. Setup the site with your preferred provider
+    - Custom
+      - Use [this link](https://docs.astro.build/en/guides/deploy/) to deploy your site to your preferred provider that is not listed here (note that you should deploy the website present in the `deploy` branch)
     - Vercel
       - Login to Vercel and create a new project
       - Select your vault repository
@@ -31,7 +34,7 @@
       - Press `Deploy`
       - You will notice the first deployment failing, head on to the settings tab in the project
       - Select the Git tab in the side navigation bar
-      - Change the production branch input field to `vercel`
+      - Change the production branch input field to `deploy`
       - Now, make a new commit to your repository and the site should be deployed
 
 ## Website configuration
@@ -153,6 +156,19 @@
   /* Code block styling */
   pre {
     @apply bg-secondary dark:bg-background border-[1px] !important;
+  }
+
+  /* Code block title styling */
+  /* In the md file, add the following to your code block */
+  /* ```python title="main.py"
+  /  ```
+  */
+  [data-remark-code-title]+pre {
+    @apply mt-0 rounded-t-none;
+  }
+
+  [data-remark-code-title] {
+    @apply bg-accent px-4 font-bold p-0 m-0 rounded-t-lg
   }
 
   /* All webkit-scrollbar styles (the below three) change the scrollbar style of the page */
