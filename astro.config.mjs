@@ -38,7 +38,7 @@ export default defineConfig({
     gfm: true,
     syntaxHighlight: "shiki",
     shikiConfig: {
-      theme: config.codeTheme ?? "one-dark-pro",
+      theme: "one-dark-pro",
     },
     remarkPlugins: [
       remarkParse,

@@ -1,5 +1,15 @@
 # Obsidian SSG
 
+## Table of Contents
+
+- [Obsidian SSG](#obsidian-ssg)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+  - [Website configuration](#website-configuration)
+  - [Styling the website](#styling-the-website)
+
+
 ## Prerequisites
 
 - Your Obsidian vault should be configured with git
@@ -11,7 +21,7 @@
     - `index.md` - The landing page
     - `[globals.css]` - The css file with which you can customize the looks of the website
 2. Create a `.github/workflows` folder in the same folder and place your preferred `.yml` file from `examples/` in it
-    - `vercel.yml` - Change `<markdown_files_folder>` on line 36 to your `.md` files directory
+    - `deploy_normal.yml` - Change the value of `MD_FOLDER` on line 9 to your `.md` files directory (leave it as `.` if all the files are in your project root directory)
 3. Push changes to your remote repository
 4. Setup the site with your preferred provider
     - Vercel
@@ -23,6 +33,37 @@
       - Select the Git tab in the side navigation bar
       - Change the production branch input field to `vercel`
       - Now, make a new commit to your repository and the site should be deployed
+
+## Website configuration
+
+- Example configuration json file
+
+```json
+{
+  "redirects": {
+    "/": "/obsidian/b"
+  },
+  "metadata": {
+    "title": "Notes",
+    "description": ""
+  },
+  "codeTheme": "one-dark-pro",
+  "links": {
+    "github": "https://github.com/dhzdhd"
+  }
+}
+```
+
+- Set of all possible configurations
+
+| Setting               | Description                                         | Possible values                                                                                                                                                                                                                                                                                                                                                                                                                     | Default      | Optional           |
+| --------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ------------------ |
+| redirects             | Redirects                                           | Key-value pair of source segment to target segment (do not include the origin - https://<website_name>)                                                                                                                                                                                                                                                                                                                             | null         | :white_check_mark: |
+| metadata: title       | Title of the website                                | A string value                                                                                                                                                                                                                                                                                                                                                                                                                      | Obsidian     | :white_check_mark: |
+| metadata: description | Description of the website (populates the meta tag) | A string value                                                                                                                                                                                                                                                                                                                                                                                                                      | null         | :white_check_mark: |
+| codeTheme             | Theme of the syntax highlighted code blocks         | css-variables, dark-plus, dracula, dracula-soft, github-dark, github-dark-dimmed, github-light, hc_light, light-plus, material-theme, material-theme-darker, material-theme-lighter, material-theme-ocean, material-theme-palenight, min-dark, min-light, monokai, nord, one-dark-pro, poimandres, rose-pine, rose-pine-dawn, rose-pine-moon, slack-dark, slack-ochin, solarized-dark, solarized-light, vitesse-dark, vitesse-light | one-dark-pro | :white_check_mark: |
+| links                 | Set of links to display in the website header       | Key-value pair with the following keys - github, twitter, linkedin, instagram, facebook, reddit, snapchat, custom (link icon will be set to default)                                                                                                                                                                                                                                                                                | null         | :white_check_mark: |
+
 
 ## Styling the website
 
