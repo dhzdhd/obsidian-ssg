@@ -36,11 +36,11 @@ jobs:
 
       - name: Move markdown files
         run: |
-          rsync -avm --include='*.md' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}" "./ssg/src/posts/"
+          rsync -avm --include='*.md' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "./ssg/src/posts/"
 
       - name: Copy images to public/
         run: |
-          rsync -avm --include='*.png' --include='*.jpg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}" "./ssg/public"
+          rsync -avm --include='*.png' --include='*.jpg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "./ssg/public"
 
       - name: Convert relative links
         run: |
