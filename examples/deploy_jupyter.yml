@@ -29,6 +29,7 @@ jobs:
       - name: Cleanup SSG repository
         run: |
           find ssg -type f -name "*.md" -exec rm -f {} +
+          rm ssg/src/config/*
 
       - name: Move config files
         run: mv ./.config ./ssg/src/config
