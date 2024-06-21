@@ -5,6 +5,7 @@ import Layout from "../layouts/Layout.astro";
 import TOC from "@components/TOC.svelte";
 import PageLink from "@components/PageLink.astro";
 import BreadcrumbNav from "@components/BreadcrumbNav.astro";
+import config from "@/config";
 
 const getSlug = (post: MarkdownInstance<Record<string, any>>): string => {
   const path = post.file.split("src/posts/")[1];
@@ -59,7 +60,7 @@ if (urlSegments[urlSegments.length - 1] === "") {
 }
 ---
 
-<Layout title="Hello">
+<Layout title={config.metadata?.title ?? "Obsidian"}>
   <TOC client:visible data={headings} />
   <div class="w-full max-w-screen-lg">
     <BreadcrumbNav urlSegments={urlSegments} />

@@ -1,12 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import config from "@/config";
 
 // TODO: Add type
 let Content: any;
 let isIndexExists = false;
-
-const posts = await Astro.glob("../config/index.md");
 
 try {
   const posts = await Astro.glob("../config/index.md");
@@ -17,7 +16,7 @@ try {
 }
 ---
 
-<Layout title="Hello">
+<Layout title={config.metadata?.title ?? "Obsidian"}>
   <div class="w-full max-w-screen-lg">
     <article
       class="p-5 prose prose-base dark:prose-invert max-w-none overflow-x-auto"

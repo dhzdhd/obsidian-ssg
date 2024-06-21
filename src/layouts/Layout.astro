@@ -6,12 +6,14 @@ import Tree from "@components/Tree.svelte";
 import { CommandMenu } from "@components/Search";
 import ForceGraph from "@components/ForceGraph";
 import { ViewTransitions } from "astro:transitions";
+import config from "@/config";
 
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+console.log(title);
 
 const posts = await Astro.glob("../posts/**/*.md");
 const compiledPosts = posts.map((val) => {
@@ -123,7 +125,10 @@ const searchHeadings: SearchHeading[] = posts.flatMap((post) => {
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
+    <meta
+      name="description"
+      content={config.metadata?.description ?? "Obsidian static website"}
+    />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link
@@ -138,7 +143,7 @@ const searchHeadings: SearchHeading[] = posts.flatMap((post) => {
     <header
       class="z-10 flex justify-between items-center px-5 bg-background h-14 w-dvw top-0 fixed border-b-[1px]"
     >
-      <a href="/" class="text-2xl">Obsidian</a>
+      <a href="/" class="text-2xl">{config.metadata?.title ?? "Obsidian"}</a>
       <div>
         <ForceGraph client:only="react" />
         <CommandMenu
