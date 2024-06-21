@@ -8,7 +8,7 @@
   let visible = false;
   let currentItem = undefined;
 
-  let innerWidth;
+  let innerWidth: number;
   let prevWidth = innerWidth;
 
   const setItem = (item: any) => {
