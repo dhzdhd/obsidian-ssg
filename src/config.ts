@@ -1,4 +1,4 @@
-import json from "@/config/config.json";
+import json from "./config/config.json";
 
 type Config = typeof json;
 

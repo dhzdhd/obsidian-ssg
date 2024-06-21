@@ -23,7 +23,7 @@
   export let treeItems: TreeItem[];
   export let level = 1;
 
-  let innerWidth;
+  let innerWidth: number;
 
   const isVisible: Writable<boolean> = getContext("treevisible");
 
