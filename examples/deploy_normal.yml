@@ -30,6 +30,7 @@ jobs:
         run: |
           find ssg -type f -name "*.md" -exec rm -f {} +
           rm -rf ssg/src/config
+          rm -rf ssg/public/*
 
       - name: Move config files
         run: mv ./.config ./ssg/src/config

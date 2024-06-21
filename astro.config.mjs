@@ -11,7 +11,7 @@ import remarkStringify from "remark-stringify";
 import { remarkWikiLink, getPermalinks } from "@portaljs/remark-wiki-link";
 import yaml from "@rollup/plugin-yaml";
 
-import config from "./src/config/config.json";
+import config from "@/config";
 // FIXME: To use TOML, wait for PR to be merged
 
 // https://astro.build/config

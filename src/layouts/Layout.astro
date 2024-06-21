@@ -25,7 +25,7 @@ posts.forEach((post, _index) => {
   const rel_path = post.file.split("src/posts/")[1];
   const sanitized = rel_path.split(".md")[0];
 
-  rel_path.split("/").reduce((r, name) => {
+  rel_path.split("/").reduce((r: any, name) => {
     if (!r[name]) {
       r[name] = { result: [] };
       if (name.endsWith(".md")) {
@@ -77,13 +77,13 @@ const searchHeadings: SearchHeading[] = posts.flatMap((post) => {
 
 <script>
   import { $linkStore } from "@/lib/stores";
-  let posts: string;
+  let posts: string = "";
 
   class Posts extends HTMLElement {
     constructor() {
       super();
 
-      posts = this.dataset.posts;
+      posts = this.dataset.posts!;
     }
   }
 

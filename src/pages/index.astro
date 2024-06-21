@@ -2,8 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
-let Content: AstroComponentFactory;
+// TODO: Add type
+let Content: any;
 let isIndexExists = false;
+
+const posts = await Astro.glob("../config/index.md");
 
 try {
   const posts = await Astro.glob("../config/index.md");
