@@ -18,7 +18,8 @@
 
 - Whenever a graphics company comes up with a new technique or a new large optimization for rendering this is often found in an extension implemented in the drivers.
 - This way, a graphics developer can still use these new rendering techniques without having to wait for OpenGL to include the functionality
-```c++
+
+```c++ copy showLineNumbers /ext/#v
 if(GL_ARB_extension_name) {
     // Do cool new and modern stuff supported by hardware
 } else {

@@ -93,4 +93,26 @@
   *::-webkit-scrollbar-thumb {
     @apply bg-secondary hover:bg-foreground
   }
+
+  code {
+    counter-reset: line;
+  }
+
+  code>[data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 0.1rem;
+    margin-right: 0.2rem;
+    text-align: right;
+    color: gray;
+  }
+
+  code[data-line-numbers-max-digits="2"]>[data-line]::before {
+    width: 0.2rem;
+  }
+
+  code[data-line-numbers-max-digits="3"]>[data-line]::before {
+    width: 0.3rem;
+  }
 }

@@ -18,7 +18,7 @@
 
 - Whenever a graphics company comes up with a new technique or a new large optimization for rendering this is often found in an extension implemented in the drivers.
 - This way, a graphics developer can still use these new rendering techniques without having to wait for OpenGL to include the functionality
-```c++
+```c++ copy
 if(GL_ARB_extension_name) {
     // Do cool new and modern stuff supported by hardware
 } else {
@@ -218,7 +218,7 @@ void main()
 - When drawing a rectangle, we need 2 triangles and we see that some vertices overlap. These are redundant and have a perf cost.
 - We store only unique vertices and specify the order in which to draw
 - EBO is a buffer like VBO that stores indices using which OpenGL decides what vertices to draw - **indexed drawing**.
-```c
+```c copy
 // Specify rect vertices instead of 2 triangles
 float vertices[] = {
      0.5f,  0.5f, 0.0f,
