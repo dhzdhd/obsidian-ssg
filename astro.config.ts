@@ -25,6 +25,9 @@ export default defineConfig({
     svelte(),
   ],
   vite: {
+    define: {
+      "process.env.IS_PREACT": JSON.stringify("true"),
+    },
     plugins: [yaml()],
   },
   prefetch: {

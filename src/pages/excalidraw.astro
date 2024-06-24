@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/Layout.astro";
+import config from "@/config";
+import ExcalidrawViewer from "@/components/Excalidraw";
+---
+
+<Layout title={config.metadata?.title ?? "Obsidian"}>
+  <div class="w-full max-w-screen-lg py-4">
+    <ExcalidrawViewer client:only="react" />
+  </div>
+</Layout>

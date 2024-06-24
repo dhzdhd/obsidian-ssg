@@ -121,11 +121,13 @@ const ForceGraph = () => {
 
                 if (node.neighbors) {
                   node.neighbors.forEach(
-                    (neighbor) => (newNodes = newNodes.add(neighbor))
+                    (neighbor: any) => (newNodes = newNodes.add(neighbor))
                   );
                 }
                 if (node.links) {
-                  node.links.forEach((link) => (newLinks = newLinks.add(link)));
+                  node.links.forEach(
+                    (link: any) => (newLinks = newLinks.add(link))
+                  );
                 }
               }
               setHighlightLinks(newLinks);
