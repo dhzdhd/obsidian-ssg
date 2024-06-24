@@ -16,7 +16,6 @@ import yaml from "@rollup/plugin-yaml";
 import config from "./src/config";
 // FIXME: To use TOML, wait for PR to be merged
 
-// https://astro.build/config
 export default defineConfig({
   integrations: [
     react(),
@@ -35,9 +34,11 @@ export default defineConfig({
   redirects: config.redirects,
   markdown: {
     gfm: true,
+    // FIXME: rehypePrettyCode works only if this is set to false
+    // https://github.com/rehype-pretty/rehype-pretty-code/blob/master/examples/astro/astro.config.ts
     syntaxHighlight: "shiki",
     shikiConfig: {
-      theme: "one-dark-pro",
+      theme: (config.codeTheme as any) ?? "one-dark-pro",
     },
     remarkPlugins: [
       remarkParse,

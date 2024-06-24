@@ -50,7 +50,7 @@
 	2. World space coords - transform the local to world space which involves a larger world, relative to world origin
 	3. View space coords - transform to view space such that each object is as seen from the camera
 	4. Clip coords - clip the screen from -1 to 1 and determine what is shown
-	5. Screen coords - a viewport transform, converts -1 to 1 to range defined by `glViewport` 
+	5. Screen coords - a viewport transform, converts -1 to 1 to range defined by `glViewport`
 
 ### Local space
 
