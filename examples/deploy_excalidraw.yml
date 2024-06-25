@@ -1,0 +1,64 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  MD_FOLDER: .
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+
+      - name: Checkout SSG repo
+        uses: actions/checkout@v4
+        with:
+          repository: dhzdhd/obsidian-ssg
+          path: ssg
+
+      - name: Cleanup SSG repository
+        run: |
+          find ssg -type f -name "*.md" -exec rm -f {} +
+          rm -rf ssg/src/config
+          rm -rf ssg/public/*
+
+      - name: Move config files
+        run: mv ./.config ./ssg/src/config
+
+      - name: Move markdown files
+        run: |
+          rsync -avm --include='*.md' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "./ssg/src/posts/"
+
+      - name: Copy images to public/
+        run: |
+          rsync -avm --include='*.png' --include='*.jpg' --include='*.webp' --include='*.svg' --include='*/' --exclude='*' "${{ env.MD_FOLDER }}/" "./ssg/public"
+
+      - name: Install python packages
+        run: pip install -r requirements.txt
+
+      - name: Convert excalidraw markdown files to json
+        run: |
+          python ./ssg/preprocess/convert_excalidraw.py ./ssg/src/posts/
+          find ./ssg/src/posts/ -name "*.excalidraw.md" -exec rsync -av --remove-source-files "$0" "./ssg/public/$(basename "$0" .md)"
+
+      # TODO: Convert the .excalidraw in public/ to .svg
+      # Then, convert all links to the original .md to .svg
+
+      - name: Convert relative links
+        run: python ./ssg/preprocess/relative_links.py ./ssg/src/posts/
+
+      - name: Push updated files to deploy branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: deploy
+          folder: ssg
