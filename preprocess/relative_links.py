@@ -24,6 +24,7 @@ for dir_path, _, file_paths in os.walk(md_folder):
         file_path = Path(f"{dir_path}/{md_file}")
 
         if str(file_path).endswith(".md"):
+            # FIXME: ignore can lead to data loss
             with open(file_path, "r", encoding="utf8", errors="ignore") as f:
                 content = re.sub(pattern, substitute, f.read())
 
