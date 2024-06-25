@@ -1,14 +1,14 @@
 import { exportToCanvas, loadFromBlob } from "@excalidraw/excalidraw";
 import { useEffect, useState } from "react";
 
-type Props = {};
+type Props = { slug: string };
 
-function ExcalidrawViewer({}: Props) {
+function ExcalidrawViewer({ slug }: Props) {
   const [canvasUrl, setCanvasUrl] = useState("");
 
   useEffect(() => {
     const execPromise = async () => {
-      const file = await fetch("sample.excalidraw");
+      const file = await fetch(`/${slug}.excalidraw`);
       const blob = await file.blob();
       const content = await loadFromBlob(blob, null, null);
 

@@ -1,12 +1,19 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "../../layouts/Layout.astro";
 import config from "@/config";
 import ExcalidrawViewer from "@/components/Excalidraw";
+
+export function getStaticPaths() {
+  // TODO: Make dynamic with fs
+  return [{ params: { slug: "sample" } }];
+}
+
+const { slug } = Astro.params;
 ---
 
 <!-- TODO: Load file in Astro and send data to component -->
 <Layout title={config.metadata?.title ?? "Obsidian"}>
   <div class="w-full max-w-screen-lg py-4">
-    <ExcalidrawViewer client:only="react" />
+    <ExcalidrawViewer client:only="react" slug={slug} />
   </div>
 </Layout>
