@@ -25,6 +25,8 @@ export default defineConfig({
     svelte(),
   ],
   vite: {
+    ssr: { external: ["node:fs"] },
+    resolve: { alias: { fs: "node:fs" } },
     define: {
       "process.env.IS_PREACT": JSON.stringify("true"),
     },
