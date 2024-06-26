@@ -51,8 +51,7 @@ jobs:
           python ./ssg/preprocess/convert_excalidraw.py ./ssg/src/posts/
           find ./ssg/src/posts/ -name "*.excalidraw.md" -exec rsync -av --remove-source-files "$0" "./ssg/public/$(basename "$0" .md)"
 
-      # TODO: Convert the .excalidraw in public/ to .svg
-      # Then, convert all links to the original .md to .svg
+      # TODO: convert all links to the original .md to excalidraw/[slug]
 
       - name: Convert relative links
         run: python ./ssg/preprocess/relative_links.py ./ssg/src/posts/
