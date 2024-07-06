@@ -18,10 +18,9 @@
 
   export let treeItems: TreeItem[];
 
-  let innerWidth;
+  let innerWidth: number;
 
   let visible = writable(false);
-
   $: $visible = innerWidth > 1650;
 </script>
 
