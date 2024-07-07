@@ -35,7 +35,8 @@ export const getStaticPaths: GetStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
-const posts = await Astro.glob("../posts/**/*.md");
+const rawPosts = await Astro.glob("../posts/**/*.md");
+const posts = rawPosts.filter((val) => !val.file.endsWith(".excalidraw.md"));
 
 const { Content } = Astro.props.post as { Content: any };
 

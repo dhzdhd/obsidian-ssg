@@ -6,14 +6,14 @@ import fs from "node:fs/promises";
 import { glob } from "glob";
 
 export async function getStaticPaths() {
-  const paths = await glob("public/*.excalidraw");
+  const paths = await glob("public/**/*.excalidraw");
 
   return await Promise.all(
     paths.map(async (path) => {
       const url = new URL(`../../../${path}`, import.meta.url);
       const json = await fs.readFile(url, "utf-8");
 
-      const splitPath = url.pathname.split(/\/(\w*)\.excalidraw/gm);
+      const splitPath = url.pathname.split(/public\/(.*)\.excalidraw/gm);
       const slug = splitPath.pop() || splitPath.pop();
 
       return { params: { slug: slug! }, props: { data: json } };

@@ -45,7 +45,6 @@
 
 - To transform to a new coord system, we use the **model**, **view** and the **projection** matrices.
 - These are then processed into **world, view and clip** coords and eventually to **screen** coords.
-- ![[Pasted image 20231231194149.png]]
 	1. Local coords - coords of object relative to local origin
 	2. World space coords - transform the local to world space which involves a larger world, relative to world origin
 	3. View space coords - transform to view space such that each object is as seen from the camera

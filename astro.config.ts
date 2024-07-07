@@ -56,6 +56,11 @@ export default defineConfig({
           pathFormat: "obsidian-short",
           permalinks: getPermalinks("./src/posts"),
           hrefTemplate: (permalink: string) => {
+            if (permalink.endsWith(".excalidraw")) {
+              const link = permalink.split("src/posts/").pop();
+              return `/excalidraw/${link!.split(".excalidraw")[0]}`;
+            }
+
             return permalink.split("src/posts").pop();
           },
         },

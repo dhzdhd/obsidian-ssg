@@ -14,7 +14,6 @@ interface Props {
 }
 
 const { title } = Astro.props;
-console.log(title);
 
 const posts = await Astro.glob("../posts/**/*.md");
 const compiledPosts = posts.map((val) => {
@@ -31,6 +30,11 @@ posts.forEach((post, _index) => {
   rel_path.split("/").reduce((r: any, name) => {
     if (!r[name]) {
       r[name] = { result: [] };
+
+      if (name.endsWith(".excalidraw.md")) {
+        return;
+      }
+
       if (name.endsWith(".md")) {
         r.result.push({
           title: name.replace(".md", ""),
