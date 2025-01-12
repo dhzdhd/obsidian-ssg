@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import config from "@/config";
-import PDFViewer from "@/components/PDFViewer.svelte";
+import PDFViewer from "@components/PDFViewer";
 import fs from "node:fs/promises";
 import { glob } from "glob";
 
@@ -28,6 +28,6 @@ const { slug } = Astro.params;
 
 <Layout title={config.metadata?.title ?? "Obsidian"}>
   <div class="w-full max-w-screen-lg py-4">
-    <PDFViewer client:only="svelte" url={`/${slug}.pdf`} />
+    <PDFViewer client:only="react" url={`/${slug}.pdf`} />
   </div>
 </Layout>
