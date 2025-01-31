@@ -1,4 +1,5 @@
 export type TreeItem = {
+  id: string;
   title: string;
   icon: Icon;
   url?: string;
