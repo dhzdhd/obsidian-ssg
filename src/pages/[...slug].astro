@@ -18,9 +18,12 @@ const getName = (slug: string): string => {
 };
 
 export const getStaticPaths: GetStaticPaths = (async () => {
-  const posts = await Astro.glob("../posts/**/*.md");
+  // const posts = await Astro.glob("../posts/**/*.md");
+  const posts = Object.values(
+    import.meta.glob("../posts/**/*.md", { eager: true }),
+  );
 
-  return posts.map((post) => {
+  return posts.map((post: any) => {
     const path = post.file.split("src/posts/")[1];
     const sanitized = path.split(".md")[0];
 
@@ -35,7 +38,10 @@ export const getStaticPaths: GetStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
-const rawPosts = await Astro.glob("../posts/**/*.md");
+// const rawPosts = await Astro.glob("../posts/**/*.md");
+const rawPosts: MarkdownInstance<Record<string, any>>[] = Object.values(
+  import.meta.glob("../posts/**/*.md", { eager: true }),
+);
 const posts = rawPosts.filter((val) => !val.file.endsWith(".excalidraw.md"));
 
 const { Content } = Astro.props.post as { Content: any };
@@ -53,7 +59,7 @@ const headings = post.getHeadings().filter((val) => val.depth != 1);
 
 // For TOC
 let urlSegments = decodeURI(
-  Astro.url.toString().replace(Astro.url.origin, "").trim().slice(1)
+  Astro.url.toString().replace(Astro.url.origin, "").trim().slice(1),
 ).split("/");
 
 if (urlSegments[urlSegments.length - 1] === "") {

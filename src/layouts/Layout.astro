@@ -15,7 +15,9 @@ interface Props {
 
 const { title } = Astro.props;
 
-const posts = Object.values(import.meta.glob('../posts/**/*.md', { eager: true }));
+const posts = Object.values(
+  import.meta.glob("../posts/**/*.md", { eager: true }),
+);
 // const posts = await Astro.glob("../posts/**/*.md");
 const compiledPosts = posts.map(async (val: any) => {
   return { url: val.file, content: await val.compiledContent() };
@@ -150,7 +152,7 @@ const searchHeadings: SearchHeading[] = posts.flatMap((post: any) => {
       class="z-10 flex justify-between items-center px-5 bg-background h-14 w-dvw top-0 fixed border-b-[1px]"
     >
       <a href="/" class="text-2xl">{config.metadata?.title ?? "Obsidian"}</a>
-      <div>
+      <div class="flex gap-2">
         <ForceGraph client:only="react" />
         {config.links && <Links links={config.links} client:load />}
         <CommandMenu

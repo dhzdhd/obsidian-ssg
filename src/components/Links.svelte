@@ -1,15 +1,14 @@
 <script lang="ts">
   import { Button } from "@/components/ui/button/index";
   import * as DropdownMenu from "@/components/ui/dropdown-menu/index";
+  import { Link, Link2 } from "lucide-svelte";
   import {
-    Facebook,
-    Github,
-    Instagram,
-    Link,
-    Link2,
-    Linkedin,
-    Twitter,
-  } from "lucide-svelte";
+    SiFacebook,
+    SiLinkedin,
+    SiX,
+    SiInstagram,
+    SiGithub,
+  } from "@icons-pack/svelte-simple-icons";
 
   export let links: Record<string, string>;
 
@@ -17,16 +16,16 @@
   function getIcon(brand: string) {
     switch (brand.toLowerCase()) {
       case "github":
-        return Github;
+        return SiGithub;
       case "instagram":
-        return Instagram;
+        return SiInstagram;
       case "twitter":
       case "x":
-        return Twitter;
+        return SiX;
       case "linkedin":
-        return Linkedin;
+        return SiLinkedin;
       case "facebook":
-        return Facebook;
+        return SiFacebook;
       default:
         return Link2;
     }
@@ -43,8 +42,8 @@
     <DropdownMenu.Label>Links</DropdownMenu.Label>
     {#each Object.entries(links) as link}
       <a href={link[1]} target="_blank">
-        <DropdownMenu.Item class="cursor-pointer">
-          <svelte:component this={getIcon(link[0])} class="h-4 w-4 mr-2" />
+        <DropdownMenu.Item class="cursor-pointer space-x-2">
+          <svelte:component this={getIcon(link[0])} class="h-4 w-4" size="15" />
           <span>{link[0]}</span>
         </DropdownMenu.Item>
       </a>

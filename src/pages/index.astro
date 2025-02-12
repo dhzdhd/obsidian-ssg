@@ -1,14 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import config from "@/config";
+import { MarkdownInstance } from "astro";
 
 // TODO: Add type
 let Content: any;
 let isIndexExists = false;
 
 try {
-  const posts = await Astro.glob("../config/index.md");
+  // const posts = await Astro.glob("../config/index.md");
+  const posts: MarkdownInstance<Record<string, any>>[] = Object.values(
+    import.meta.glob("../config/index.md", { eager: true }),
+  );
   Content = posts[0].Content;
   isIndexExists = true;
 } catch (e) {
