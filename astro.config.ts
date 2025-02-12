@@ -14,7 +14,6 @@ import { remarkWikiLink, getPermalinks } from "@portaljs/remark-wiki-link";
 import yaml from "@rollup/plugin-yaml";
 
 import config from "./src/config";
-// FIXME: To use TOML, wait for PR to be merged
 
 export default defineConfig({
   integrations: [
@@ -50,21 +49,21 @@ export default defineConfig({
       remarkStringify,
       remarkCodeTitle,
       remarkMath,
-      // [
-      //   remarkWikiLink,
-      //   {
-      //     pathFormat: "obsidian-short",
-      //     permalinks: getPermalinks("./src/posts"),
-      //     hrefTemplate: (permalink: string) => {
-      //       if (permalink.endsWith(".excalidraw")) {
-      //         const link = permalink.split("src/posts/").pop();
-      //         return `/excalidraw/${link!.split(".excalidraw")[0]}`;
-      //       }
+      [
+        remarkWikiLink,
+        {
+          pathFormat: "obsidian-short",
+          permalinks: getPermalinks("./src/posts"),
+          hrefTemplate: (permalink: string) => {
+            if (permalink.endsWith(".excalidraw")) {
+              const link = permalink.split("src/posts/").pop();
+              return `/excalidraw/${link!.split(".excalidraw")[0]}`;
+            }
 
-      //       return permalink.split("src/posts").pop();
-      //     },
-      //   },
-      // ],
+            return permalink.split("src/posts").pop();
+          },
+        },
+      ],
     ],
     rehypePlugins: [
       rehypeKatex,
