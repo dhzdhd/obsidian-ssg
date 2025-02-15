@@ -43,7 +43,7 @@
     {#each Object.entries(links) as link}
       <a href={link[1]} target="_blank">
         <DropdownMenu.Item class="cursor-pointer space-x-2">
-          <svelte:component this={getIcon(link[0])} class="h-4 w-4" size="15" />
+          <svelte:component this={getIcon(link[0])} class="h-4 w-4" size={15} />
           <span>{link[0]}</span>
         </DropdownMenu.Item>
       </a>

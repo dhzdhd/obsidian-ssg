@@ -8,7 +8,7 @@
   let visible = false;
   let currentItem: any = undefined;
 
-  let innerWidth: number;
+  let innerWidth: number = 0;
   let prevWidth = innerWidth;
 
   const setItem = (item: any) => {
@@ -80,5 +80,5 @@
 <button
   on:click={toggleVisibility}
   class="z-20 fixed bottom-2 right-2 opacity-45 hover:opacity-100"
-  ><PanelRight /></button
->
+  ><PanelRight />
+</button>

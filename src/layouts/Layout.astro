@@ -4,10 +4,11 @@ import { ModeToggle } from "@/components/ModeToggle";
 import type { TreeItem, SearchData, SearchHeading } from "@/lib/types";
 import Tree from "@components/Tree.svelte";
 import { CommandMenu } from "@components/Search";
-import ForceGraph from "@components/ForceGraph";
+import ForceGraph from "@components/ForceGraph.tsx";
 import { ClientRouter } from "astro:transitions";
 import config from "@/config";
 import Links from "@components/Links.svelte";
+import type { MarkdownInstance } from "astro";
 
 interface Props {
   title: string;
@@ -15,18 +16,18 @@ interface Props {
 
 const { title } = Astro.props;
 
-const posts = Object.values(
+const posts: MarkdownInstance<Record<string, any>>[] = Object.values(
   import.meta.glob("../posts/**/*.md", { eager: true }),
 );
 // const posts = await Astro.glob("../posts/**/*.md");
-const compiledPosts = posts.map(async (val: any) => {
+const compiledPosts = posts.map(async (val) => {
   return { url: val.file, content: await val.compiledContent() };
 });
 
 let result: TreeItem[] = [];
 let level = { result };
 
-posts.forEach((post: any, _index) => {
+posts.forEach((post, _index) => {
   const rel_path = post.file.split("src/posts/")[1];
   const sanitized = rel_path.split(".md")[0];
 
@@ -59,7 +60,7 @@ posts.forEach((post: any, _index) => {
 });
 const data = result;
 
-const searchData: SearchData[] = posts.map((post: any) => {
+const searchData: SearchData[] = posts.map((post) => {
   const path = post.file.split("src/posts/")[1];
   const sanitized = path.split(".md")[0];
 
@@ -69,11 +70,11 @@ const searchData: SearchData[] = posts.map((post: any) => {
   } satisfies SearchData;
 });
 
-const searchHeadings: SearchHeading[] = posts.flatMap((post: any) => {
+const searchHeadings: SearchHeading[] = posts.flatMap((post) => {
   const path = post.file.split("src/posts/")[1];
   const sanitized = path.split(".md")[0];
 
-  return post.getHeadings().map((heading: any) => {
+  return post.getHeadings().map((heading) => {
     const hash = "#".repeat(heading.depth);
 
     return {
