@@ -1,5 +1,9 @@
 # Obsidian SSG
 
+## Note
+
+This project is no longer maintained. Head over to https://github.com/dhzdhd/jade. Jade is built in SvelteKit and skips the preprocessing scripts in obsidian-ssg 
+
 ## Table of Contents
 
 - [Obsidian SSG](#obsidian-ssg)
